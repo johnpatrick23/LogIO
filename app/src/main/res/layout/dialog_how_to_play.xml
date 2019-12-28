@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/mConstraintLayoutHowToPlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_howtoplaypanel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/mTextViewTitleHowToPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/courierprime_bold"
+            android:gravity="center"
+            android:text="HOW TO PLAY"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/mTextViewInstruction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/courierprime_regular"
+            android:gravity="center"
+            android:text="idn ashjnd asdubjn asdgibh masdgyhvbn asdaukbjn sdasdbkj ,asdabks dnasdbam sd"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:maxWidth="480dp"
+            app:layout_constraintBottom_toTopOf="@+id/mImageButtonOk"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewTitleHowToPlay" />
+
+        <ImageButton
+            android:id="@+id/mImageButtonOk"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginBottom="32dp"
+            android:padding="0dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_okayicon" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

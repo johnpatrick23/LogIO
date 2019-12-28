@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/mConstraintLayoutAllLevels"
+        android:layout_width="420dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_levelpanel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/mTextViewTitleAllLevels"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/courierprime_bold"
+            android:text="All Levels"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mTextViewTitleAllLevels">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/mImageButtonLevel1"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:padding="0dp"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/ic_level1" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel1Star1"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starleftlocked" />
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel1Star2"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starmiddlelocked" />
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel1Star3"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starrightlocked" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/mImageButtonLevel2"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:padding="0dp"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/ic_level2" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel2Star1"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starleftlocked" />
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel2Star2"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starmiddlelocked" />
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel2Star3"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starrightlocked" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/mImageButtonLevel3"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:padding="0dp"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/ic_level3" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel3Star1"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starleftlocked" />
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel3Star2"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starmiddlelocked" />
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel3Star3"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starrightlocked" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/mImageButtonLevel4"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:padding="0dp"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/ic_level4" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel4Star1"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starleftlocked" />
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel4Star2"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starmiddlelocked" />
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel4Star3"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starrightlocked" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/mImageButtonLevel5"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:padding="0dp"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/ic_level5" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel5Star1"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starleftlocked" />
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel5Star2"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starmiddlelocked" />
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel5Star3"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starrightlocked" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/mImageButtonLevel6"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:padding="0dp"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/ic_level6" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel6Star1"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starleftlocked" />
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel6Star2"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starmiddlelocked" />
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel6Star3"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starrightlocked" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/mImageButtonHome"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="64dp"
+                        android:layout_height="wrap_content"
+                        android:padding="0dp"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/ic_homeicon" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/mImageButtonLevel7"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:padding="0dp"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/ic_level7" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel7Star1"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starleftlocked" />
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel7Star2"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starmiddlelocked" />
+
+                        <ImageView
+                            android:id="@+id/mImageViewLevel7Star3"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_starrightlocked" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/mImageButtonPlay"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="64dp"
+                        android:layout_height="wrap_content"
+                        android:padding="0dp"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/ic_playicon" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/mImageButtonCloseAllLevels"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:padding="0dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_closeicon" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>
