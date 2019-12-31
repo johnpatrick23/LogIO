@@ -26,7 +26,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imageButton13"
+                android:id="@+id/mImageButtonGameBack"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
                 app:srcCompat="@drawable/ic_backarrow" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/mTextViewGameNumberOfQuestion"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -47,7 +47,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/mTextViewGameTimer"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -66,7 +66,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/imageButton14"
+                    android:id="@+id/mImageButtonGamePause"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
                     app:srcCompat="@drawable/ic_pauseicon" />
 
                 <ImageButton
-                    android:id="@+id/imageButton15"
+                    android:id="@+id/mImageButtonGameHelp"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                     app:srcCompat="@drawable/ic_helpicon" />
 
                 <ImageButton
-                    android:id="@+id/imageButton16"
+                    android:id="@+id/mImageButtonGameOption"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -138,7 +138,6 @@
                     android:id="@+id/textView13"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_achievementmainbtn"
                     android:fontFamily="@font/courierprime_regular"
                     android:gravity="center"
                     android:paddingLeft="16dp"
@@ -172,6 +171,7 @@
                                 android:id="@+id/mImageButtonAND"
                                 style="@style/Widget.AppCompat.Button.Borderless"
                                 android:layout_width="72dp"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@drawable/ic_level_blank"
                                 android:padding="8dp"
@@ -205,6 +205,7 @@
                                 android:id="@+id/mImageButtonNAND"
                                 style="@style/Widget.AppCompat.Button.Borderless"
                                 android:layout_width="72dp"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@drawable/ic_level_blank"
                                 android:padding="8dp"
@@ -246,6 +247,7 @@
                                 android:id="@+id/mImageButtonBUFFER"
                                 style="@style/Widget.AppCompat.Button.Borderless"
                                 android:layout_width="72dp"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@drawable/ic_level_blank"
                                 android:padding="8dp"
@@ -279,6 +281,7 @@
                                 android:id="@+id/mImageButtonNOT"
                                 style="@style/Widget.AppCompat.Button.Borderless"
                                 android:layout_width="72dp"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@drawable/ic_level_blank"
                                 android:padding="8dp"
@@ -319,6 +322,7 @@
                                 android:id="@+id/mImageButtonOR"
                                 style="@style/Widget.AppCompat.Button.Borderless"
                                 android:layout_width="72dp"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@drawable/ic_level_blank"
                                 android:padding="8dp"
@@ -352,6 +356,7 @@
                                 android:id="@+id/mImageButtonNOR"
                                 style="@style/Widget.AppCompat.Button.Borderless"
                                 android:layout_width="72dp"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@drawable/ic_level_blank"
                                 android:padding="8dp"
@@ -392,6 +397,7 @@
                                 android:id="@+id/mImageButtonXOR"
                                 style="@style/Widget.AppCompat.Button.Borderless"
                                 android:layout_width="72dp"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@drawable/ic_level_blank"
                                 android:padding="8dp"
@@ -425,6 +431,7 @@
                                 android:id="@+id/mImageButtonXNOR"
                                 style="@style/Widget.AppCompat.Button.Borderless"
                                 android:layout_width="72dp"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@drawable/ic_level_blank"
                                 android:padding="8dp"

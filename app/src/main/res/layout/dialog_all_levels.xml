@@ -184,6 +184,7 @@
                             app:srcCompat="@drawable/ic_starrightlocked" />
                     </LinearLayout>
                 </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -331,6 +332,7 @@
                             app:srcCompat="@drawable/ic_starrightlocked" />
                     </LinearLayout>
                 </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -420,6 +422,7 @@
                         android:scaleType="fitCenter"
                         app:srcCompat="@drawable/ic_playicon" />
                 </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>

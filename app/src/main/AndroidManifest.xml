@@ -24,7 +24,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".GameDragAndDropActivity"></activity>
+        <activity android:name=".GameDragAndDropActivity"
+            android:screenOrientation="sensorLandscape"/>
         <activity
             android:name=".GameActivity"
             android:screenOrientation="sensorLandscape" />
