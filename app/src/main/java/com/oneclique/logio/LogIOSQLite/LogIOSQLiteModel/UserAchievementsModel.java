@@ -7,6 +7,15 @@ public class UserAchievementsModel implements Serializable {
     private String a_level;
     private String a_stars;
     private String a_time_finished;
+    private String a_description;
+
+    public String getA_description() {
+        return a_description;
+    }
+
+    public void setA_description(String a_description) {
+        this.a_description = a_description;
+    }
 
     public String getA_id() {
         return a_id;

@@ -30,7 +30,6 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 
 public class AppCompatActivityHelper extends AppCompatActivity implements RequestVariables, Variables {
@@ -114,7 +113,7 @@ public class AppCompatActivityHelper extends AppCompatActivity implements Reques
         }
     }
 
-    String TAG = "LaroLexia";
+    String TAG = "LogIO";
 
     protected void createPath(Context context) throws IOException {
         final File dir = context.getExternalFilesDir(null);
@@ -458,5 +457,33 @@ public class AppCompatActivityHelper extends AppCompatActivity implements Reques
         }
     }
 
+
+    class TimesUp {
+        Dialog dialog;
+        ImageButton mImageButtonTimesUpRestart;
+        ImageButton mImageButtonTimesUpOk;
+
+        TimesUp(Context context){
+            dialog = new Dialog(context);
+            dialog.setContentView(R.layout.dialog_times_up);
+            FullscreenDialog(dialog);
+            mImageButtonTimesUpOk = dialog.findViewById(R.id.mImageButtonTimesUpOk);
+            mImageButtonTimesUpRestart = dialog.findViewById(R.id.mImageButtonTimesUpRestart);
+        }
+    }
+
+    class Correct {
+        Dialog dialog;
+        ImageButton mImageButtonCorrectOk;
+        TextView mTextViewCorrectMessage;
+
+        Correct(Context context){
+            dialog = new Dialog(context);
+            dialog.setContentView(R.layout.dialog_correct);
+            FullscreenDialog(dialog);
+            mTextViewCorrectMessage = dialog.findViewById(R.id.mTextViewCorrectMessage);
+            mImageButtonCorrectOk = dialog.findViewById(R.id.mImageButtonCorrectOk);
+        }
+    }
 
 }

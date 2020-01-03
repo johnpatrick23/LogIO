@@ -6,8 +6,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.Editable;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,9 +30,15 @@ import com.oneclique.logio.LogIOSQLite.LogIOSQLiteModel.QuestionModel;
 import com.oneclique.logio.LogIOSQLite.LogIOSQLiteModel.UsersModel;
 import com.oneclique.logio.LogIOSQLite.SQLITE_VARIABLES;
 import com.oneclique.logio.adapter.UsernameListViewAdapter;
+import com.oneclique.logio.model.PlayerInGameModel;
+
+import org.sufficientlysecure.htmltextview.HtmlFormatter;
+import org.sufficientlysecure.htmltextview.HtmlFormatterBuilder;
+import org.sufficientlysecure.htmltextview.HtmlResImageGetter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivityHelper {
 
@@ -39,6 +49,8 @@ public class MainActivity extends AppCompatActivityHelper {
     private ImageButton mImageButtonLeaderboard;
     private ImageButton mImageButtonSettings;
     private ImageButton mImageButtonUserIcon;
+
+    private PlayerInGameModel playerInGameModel;
 
     private TextView mTextViewUsername;
 
@@ -51,8 +63,8 @@ public class MainActivity extends AppCompatActivityHelper {
     private LogIOSQLiteHelper logIOSQLiteHelper;
     private List<List<QuestionModel>> listsOfQuestionsPerLevel;
     private List<QuestionModel> questionModelList;
-
-
+    private AllLevels allLevels;
+    private List<Integer> stars;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +72,8 @@ public class MainActivity extends AppCompatActivityHelper {
         requestPermission(MainActivity.this);
         setContentView(R.layout.activity_main);
 
-        final AllLevels allLevels = new AllLevels(MainActivity.this);
-
+        allLevels = new AllLevels(MainActivity.this);
+        playerInGameModel = new PlayerInGameModel();
         mImageButtonStart = findViewById(R.id.mImageButtonStart);
         mImageButtonUserIcon = findViewById(R.id.mImageButtonUserIcon);
         mImageButtonAchievements = findViewById(R.id.mImageButtonAchievements);
@@ -80,6 +92,7 @@ public class MainActivity extends AppCompatActivityHelper {
         logIOSQLite.createDatabase();
 
         mImageButtonStart.setEnabled(!mTextViewUsername.getText().toString().isEmpty());
+
 
         //region mTextViewUsername.addTextChangedListener
         mTextViewUsername.addTextChangedListener(new TextWatcher() {
@@ -104,7 +117,7 @@ public class MainActivity extends AppCompatActivityHelper {
         Cursor usernamesCursor = logIOSQLite.executeReader(
                 "SELECT * FROM " + SQLITE_VARIABLES.Table_Users.DB_TABLE_NAME +
                         " where " + SQLITE_VARIABLES.Table_Users.DB_COL_LAST_USED + " = '1';");
-        List<Integer> stars = new ArrayList<>();
+        stars = new ArrayList<>();
         if(usernamesCursor.getCount() != 0){
             while(usernamesCursor.moveToNext()){
                 usersModel.setA_id(usernamesCursor.getString(usernamesCursor.getColumnIndex(
@@ -128,6 +141,8 @@ public class MainActivity extends AppCompatActivityHelper {
                 usersModel.setA_level_7_stars(usernamesCursor.getString(usernamesCursor.getColumnIndex(
                         SQLITE_VARIABLES.Table_Users.DB_COL_LEVEL_7_STARS)));
             }
+            UserModelLog(usersModel);
+            selectedPlayer = usersModel.getA_username();
             mTextViewUsername.setText(usersModel.getA_username());
             stars.add(Integer.parseInt(usersModel.getA_level_1_stars()));
             stars.add(Integer.parseInt(usersModel.getA_level_2_stars()));
@@ -196,8 +211,13 @@ public class MainActivity extends AppCompatActivityHelper {
                     /*QuestionListModel questionListModel = new QuestionListModel();
                     questionListModel.setQuestionListModelList(listsOfQuestionsPerLevel);
                     intent.putExtra(QUESTIONS, questionListModel);*/
-                    intent.putExtra(SELECTED_LEVEL, (finalI));
-                    startActivity(intent);
+                    playerInGameModel.setSelectedLevel(String.valueOf(finalI));
+                    playerInGameModel.setUsername(selectedPlayer);
+                    playerInGameModel.setUsersModel(usersModel);
+                    Log.i(TAG, "playerInGameModel.getUsername(): " + playerInGameModel.getUsername());
+                    Log.i(TAG, "playerInGameModel.getSelectedLevel(): " + playerInGameModel.getSelectedLevel());
+                    intent.putExtra(PLAYER_IN_GAME_MODEL, playerInGameModel);
+                    startActivityForResult(intent, REQUEST_PLAYER_IN_GAME_MODEL);
                 }
             });
         }
@@ -215,7 +235,81 @@ public class MainActivity extends AppCompatActivityHelper {
         mImageButtonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                for(int i = 0; i < allLevels.mImageViewLevelsStars.length; i++){
+                    allLevels.mImageViewLevelsStars[i][0].setImageDrawable(getDrawable(R.drawable.ic_starleftlocked));
+                    allLevels.mImageViewLevelsStars[i][1].setImageDrawable(getDrawable(R.drawable.ic_starmiddlelocked));
+                    allLevels.mImageViewLevelsStars[i][2].setImageDrawable(getDrawable(R.drawable.ic_starrightlocked));
+                }
+
+
                 if(!mTextViewUsername.getText().toString().isEmpty()){
+
+                    //region Get last used user
+                    Cursor usernamesCursor = logIOSQLite.executeReader(
+                            "SELECT * FROM " + SQLITE_VARIABLES.Table_Users.DB_TABLE_NAME +
+                                    " where " + SQLITE_VARIABLES.Table_Users.DB_COL_LAST_USED + " = '1';");
+                    stars = new ArrayList<>();
+                    if(usernamesCursor.getCount() != 0){
+                        while(usernamesCursor.moveToNext()){
+                            usersModel.setA_id(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                    SQLITE_VARIABLES.Table_Users.DB_COL_ID)));
+                            usersModel.setA_username(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                    SQLITE_VARIABLES.Table_Users.DB_COL_USERNAME)));
+                            usersModel.setA_last_used(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                    SQLITE_VARIABLES.Table_Users.DB_COL_LAST_USED)));
+                            usersModel.setA_level_1_stars(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                    SQLITE_VARIABLES.Table_Users.DB_COL_LEVEL_1_STARS)));
+                            usersModel.setA_level_2_stars(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                    SQLITE_VARIABLES.Table_Users.DB_COL_LEVEL_2_STARS)));
+                            usersModel.setA_level_3_stars(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                    SQLITE_VARIABLES.Table_Users.DB_COL_LEVEL_3_STARS)));
+                            usersModel.setA_level_4_stars(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                    SQLITE_VARIABLES.Table_Users.DB_COL_LEVEL_4_STARS)));
+                            usersModel.setA_level_5_stars(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                    SQLITE_VARIABLES.Table_Users.DB_COL_LEVEL_5_STARS)));
+                            usersModel.setA_level_6_stars(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                    SQLITE_VARIABLES.Table_Users.DB_COL_LEVEL_6_STARS)));
+                            usersModel.setA_level_7_stars(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                    SQLITE_VARIABLES.Table_Users.DB_COL_LEVEL_7_STARS)));
+                        }
+                        UserModelLog(usersModel);
+                        selectedPlayer = usersModel.getA_username();
+                        mTextViewUsername.setText(usersModel.getA_username());
+                        stars.add(Integer.parseInt(usersModel.getA_level_1_stars()));
+                        stars.add(Integer.parseInt(usersModel.getA_level_2_stars()));
+                        stars.add(Integer.parseInt(usersModel.getA_level_3_stars()));
+                        stars.add(Integer.parseInt(usersModel.getA_level_4_stars()));
+                        stars.add(Integer.parseInt(usersModel.getA_level_5_stars()));
+                        stars.add(Integer.parseInt(usersModel.getA_level_6_stars()));
+                        stars.add(Integer.parseInt(usersModel.getA_level_7_stars()));
+                        //playerStatisticModel.setUsername(usersModel.getA_username());
+                        //playerStatisticModel.setCharacter(usersModel.getA_character());
+                        for(int i = 0; i < allLevels.mImageViewLevelsStars.length; i++){
+                            switch (stars.get(i)){
+                                case 1:{
+                                    allLevels.mImageViewLevelsStars[i][0].setImageDrawable(getDrawable(R.drawable.ic_starleft));
+                                    allLevels.mImageViewLevelsStars[i][1].setImageDrawable(getDrawable(R.drawable.ic_starmiddlelocked));
+                                    allLevels.mImageViewLevelsStars[i][2].setImageDrawable(getDrawable(R.drawable.ic_starrightlocked));
+                                    break;
+                                }
+                                case 2:{
+                                    allLevels.mImageViewLevelsStars[i][0].setImageDrawable(getDrawable(R.drawable.ic_starleft));
+                                    allLevels.mImageViewLevelsStars[i][1].setImageDrawable(getDrawable(R.drawable.ic_starmiddle));
+                                    allLevels.mImageViewLevelsStars[i][2].setImageDrawable(getDrawable(R.drawable.ic_starrightlocked));
+                                    break;
+                                }
+                                case 3:{
+                                    allLevels.mImageViewLevelsStars[i][0].setImageDrawable(getDrawable(R.drawable.ic_starleft));
+                                    allLevels.mImageViewLevelsStars[i][1].setImageDrawable(getDrawable(R.drawable.ic_starmiddle));
+                                    allLevels.mImageViewLevelsStars[i][2].setImageDrawable(getDrawable(R.drawable.ic_starright));
+                                    break;
+                                }
+                                default: break;
+                            }
+                        }
+                    }
+                    //endregion
                     allLevels.dialog.show();
                 }
             }
@@ -236,7 +330,7 @@ public class MainActivity extends AppCompatActivityHelper {
                     public void onClick(View v) {
                         mTextViewUsername.setText(user.mTextViewSelectedUsername.getText().toString());
                         Cursor cursor = logIOSQLite.executeReader("Select * from " + SQLITE_VARIABLES.Table_Users.DB_TABLE_NAME + " " +
-                                "where " + SQLITE_VARIABLES.Table_Users.DB_COL_USERNAME + ";");
+                                "where " + SQLITE_VARIABLES.Table_Users.DB_COL_USERNAME + " = '" + mTextViewUsername.getText() + "';");
                         if(cursor.getCount() != 0){
                             while (cursor.moveToNext()){
                                 usersModel.setA_id(cursor.getString(cursor.getColumnIndex(SQLITE_VARIABLES.Table_Users.DB_COL_ID)));
@@ -250,8 +344,11 @@ public class MainActivity extends AppCompatActivityHelper {
                                 usersModel.setA_level_6_stars(cursor.getString(cursor.getColumnIndex(SQLITE_VARIABLES.Table_Users.DB_COL_LEVEL_6_STARS)));
                                 usersModel.setA_level_7_stars(cursor.getString(cursor.getColumnIndex(SQLITE_VARIABLES.Table_Users.DB_COL_LEVEL_7_STARS)));
                             }
+                            UserModelLog(usersModel);
                         }
                         user.dialog.cancel();
+
+
                     }
                 });
                 //endregion
@@ -399,16 +496,35 @@ public class MainActivity extends AppCompatActivityHelper {
             }
         });
         //endregion
+        //Spanned formattedHtml = HtmlFormatter.formatHtml(new HtmlFormatterBuilder().setHtml("ĀB̅<span style=\"text-decoration: overline; padding-left: 160px; padding-right: 160px;\">A</span><br/>(A)<br/>A&oplus;<br/>A+<br/>").setImageGetter(new HtmlResImageGetter(mTextViewUsername.getContext())));
+       /* String hh = "<span style=\" border-top: 1px solid black;\">(A+B)&oplus;<span style=\"font-size: 14px; text-decoration: overline; padding-left: 1pt; padding-right: 1pt; padding-top: 10px;\">C</span></span><br/><span style=\" border-top: 1px solid black;\">(A+B)+<span style=\"font-size: 14px; text-decoration: overline; padding-left: 1pt; padding-right: 1pt; padding-top: 10px;\">C</span></span><br/>(AB)&oplus;<span style=\"text-decoration: overline; padding-left: 1pt; padding-right: 1pt;\">C</span><br/><span style=\" border-top: 1px solid black;\">(A+B)&oplus;C</span><br/>";
+        mTextViewUsername.setBackgroundResource(R.drawable.border);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            mTextViewUsername.setText(Html.fromHtml(hh, Html.FROM_HTML_OPTION_USE_CSS_COLORS));
+        }*/
 
 
     }
 
-    private void fillUsernames(LogIOSQLite laroLexiaSQLite,
+    private void UserModelLog(UsersModel usersModel){
+        Log.i(TAG, "getA_id: " + usersModel.getA_id());
+        Log.i(TAG, "getA_username: " + usersModel.getA_username());
+        Log.i(TAG, "getA_last_used: " + usersModel.getA_last_used());
+        Log.i(TAG, "getA_level_1_stars: " + usersModel.getA_level_1_stars());
+        Log.i(TAG, "getA_level_2_stars: " + usersModel.getA_level_2_stars());
+        Log.i(TAG, "getA_level_3_stars: " + usersModel.getA_level_3_stars());
+        Log.i(TAG, "getA_level_4_stars: " + usersModel.getA_level_4_stars());
+        Log.i(TAG, "getA_level_5_stars: " + usersModel.getA_level_5_stars());
+        Log.i(TAG, "getA_level_6_stars: " + usersModel.getA_level_6_stars());
+        Log.i(TAG, "getA_level_7_stars: " + usersModel.getA_level_7_stars());
+    }
+
+    private void fillUsernames(LogIOSQLite logIOSQLite,
                                ListView mListViewUsername,
                                ImageButton mImageButtonSelectUsernameDelete,
                                ImageButton mImageButtonSelectUsernameSelect,
                                Activity activity){
-        Cursor usernamesCursor = laroLexiaSQLite.executeReader(
+        Cursor usernamesCursor = logIOSQLite.executeReader(
                 "select " + SQLITE_VARIABLES.Table_Users.DB_COL_USERNAME + " from " +
                         SQLITE_VARIABLES.Table_Users.DB_TABLE_NAME);
 
@@ -435,5 +551,81 @@ public class MainActivity extends AppCompatActivityHelper {
         mImageButtonSelectUsernameSelect.setVisibility(View.GONE);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
+
+        if(requestCode == REQUEST_PLAYER_IN_GAME_MODEL){
+            if(resultCode == Activity.RESULT_OK){
+                PlayerInGameModel playerInGameModel = (PlayerInGameModel) Objects.requireNonNull(
+                        Objects.requireNonNull(data).getExtras()).getSerializable(PLAYER_IN_GAME_MODEL);
+                //region Get last used user
+                Cursor usernamesCursor = logIOSQLite.executeReader(
+                        "SELECT * FROM " + SQLITE_VARIABLES.Table_Users.DB_TABLE_NAME +
+                                " where " + SQLITE_VARIABLES.Table_Users.DB_COL_USERNAME + " = '" + playerInGameModel.getUsername() + "';");
+                List<Integer> stars = new ArrayList<>();
+                usersModel = new UsersModel();
+                if(usernamesCursor.getCount() != 0){
+                    while(usernamesCursor.moveToNext()){
+                        usersModel.setA_id(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                SQLITE_VARIABLES.Table_Users.DB_COL_ID)));
+                        usersModel.setA_username(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                SQLITE_VARIABLES.Table_Users.DB_COL_USERNAME)));
+                        usersModel.setA_last_used(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                SQLITE_VARIABLES.Table_Users.DB_COL_LAST_USED)));
+                        usersModel.setA_level_1_stars(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                SQLITE_VARIABLES.Table_Users.DB_COL_LEVEL_1_STARS)));
+                        usersModel.setA_level_2_stars(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                SQLITE_VARIABLES.Table_Users.DB_COL_LEVEL_2_STARS)));
+                        usersModel.setA_level_3_stars(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                SQLITE_VARIABLES.Table_Users.DB_COL_LEVEL_3_STARS)));
+                        usersModel.setA_level_4_stars(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                SQLITE_VARIABLES.Table_Users.DB_COL_LEVEL_4_STARS)));
+                        usersModel.setA_level_5_stars(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                SQLITE_VARIABLES.Table_Users.DB_COL_LEVEL_5_STARS)));
+                        usersModel.setA_level_6_stars(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                SQLITE_VARIABLES.Table_Users.DB_COL_LEVEL_6_STARS)));
+                        usersModel.setA_level_7_stars(usernamesCursor.getString(usernamesCursor.getColumnIndex(
+                                SQLITE_VARIABLES.Table_Users.DB_COL_LEVEL_7_STARS)));
+                    }
+                    UserModelLog(usersModel);
+
+                    mTextViewUsername.setText(usersModel.getA_username());
+                    stars.add(Integer.parseInt(usersModel.getA_level_1_stars()));
+                    stars.add(Integer.parseInt(usersModel.getA_level_2_stars()));
+                    stars.add(Integer.parseInt(usersModel.getA_level_3_stars()));
+                    stars.add(Integer.parseInt(usersModel.getA_level_4_stars()));
+                    stars.add(Integer.parseInt(usersModel.getA_level_5_stars()));
+                    stars.add(Integer.parseInt(usersModel.getA_level_6_stars()));
+                    stars.add(Integer.parseInt(usersModel.getA_level_7_stars()));
+                    //playerStatisticModel.setUsername(usersModel.getA_username());
+                    //playerStatisticModel.setCharacter(usersModel.getA_character());
+                    for(int i = 0; i < allLevels.mImageViewLevelsStars.length; i++){
+                        switch (stars.get(i)){
+                            case 1:{
+                                allLevels.mImageViewLevelsStars[i][0].setImageDrawable(getDrawable(R.drawable.ic_starleft));
+                                allLevels.mImageViewLevelsStars[i][1].setImageDrawable(getDrawable(R.drawable.ic_starmiddlelocked));
+                                allLevels.mImageViewLevelsStars[i][2].setImageDrawable(getDrawable(R.drawable.ic_starrightlocked));
+                                break;
+                            }
+                            case 2:{
+                                allLevels.mImageViewLevelsStars[i][0].setImageDrawable(getDrawable(R.drawable.ic_starleft));
+                                allLevels.mImageViewLevelsStars[i][1].setImageDrawable(getDrawable(R.drawable.ic_starmiddle));
+                                allLevels.mImageViewLevelsStars[i][2].setImageDrawable(getDrawable(R.drawable.ic_starrightlocked));
+                                break;
+                            }
+                            case 3:{
+                                allLevels.mImageViewLevelsStars[i][0].setImageDrawable(getDrawable(R.drawable.ic_starleft));
+                                allLevels.mImageViewLevelsStars[i][1].setImageDrawable(getDrawable(R.drawable.ic_starmiddle));
+                                allLevels.mImageViewLevelsStars[i][2].setImageDrawable(getDrawable(R.drawable.ic_starright));
+                                break;
+                            }
+                            default: break;
+                        }
+                    }
+                }
+                //endregion
+            }
+        }
+    }
 }

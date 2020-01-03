@@ -16,7 +16,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class LogIOSQLite extends SQLiteOpenHelper {
-    private static final String TAG = "LaroLexiaSQLite";
+    private static final String TAG = "LogIOSQLite";
 
     private SQLiteDatabase db;
 
@@ -28,7 +28,7 @@ public class LogIOSQLite extends SQLiteOpenHelper {
         super(context, SQLITE_VARIABLES.DB_NAME, null, 1);
         this.context = context;
         DB_PATH = context.getDatabasePath(SQLITE_VARIABLES.DB_NAME).getAbsolutePath();
-        Log.i(TAG, "SQLiteLaroLexia: " + DB_PATH);
+        Log.i(TAG, "LogIOSQLite: " + DB_PATH);
     }
 
     @Override

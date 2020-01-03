@@ -24,6 +24,7 @@ public class SQLITE_VARIABLES {
         public final static String DB_COL_LEVEL = "a_level";
         public final static String DB_COL_STAR = "a_star";
         public final static String DB_COL_TIME_FINISHED= "a_time_finished";
+        public final static String DB_COL_DESCRIPTION = "a_description";
     }
 
     public final static class Table_Questions{

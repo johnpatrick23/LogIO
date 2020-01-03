@@ -6,7 +6,7 @@ public interface Variables {
         DIAGRAM("DIAGRAM"),
         DRAG_AND_DROP("DRAG_AND_DROP"),
         IDENTIFICATION("IDENTIFICATION"),
-        MULTIPLECHOICE("MULTIPLE_CHOICE"),
+        MULTIPLE_CHOICE("MULTIPLE_CHOICE"),
         TRUTH_TABLE("TRUTH_TABLE");
         private String value;
 
@@ -25,8 +25,17 @@ public interface Variables {
         public static final String DIAGRAM ="DIAGRAM";
         public static final String DRAG_AND_DROP = "DRAG_AND_DROP";
         public static final String IDENTIFICATION = "IDENTIFICATION";
-        public static final String MULTIPLECHOICE = "MULTIPLE_CHOICE";
+        public static final String MULTIPLE_CHOICE = "MULTIPLE_CHOICE";
         public static final String TRUTH_TABLE = "TRUTH_TABLE";
+    }
+
+    class QuestionCategory{
+        public static final String AND ="AND";
+        public static final String NOT = "NOT";
+        public static final String OR = "OR";
+        public static final String XNOR = "XNOR";
+        public static final String XOR = "XOR";
+        public static final String INTEGRATED_CIRCUIT = "Integrated Circuit";
     }
 
 }

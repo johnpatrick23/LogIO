@@ -86,7 +86,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/or" />
+                    app:srcCompat="@drawable/and" />
 
                 <ImageView
                     android:id="@+id/imageView5"
@@ -101,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/and_both" />
+                app:srcCompat="@drawable/ic_or_both" />
 
             <TextView
                 android:id="@+id/textView14"

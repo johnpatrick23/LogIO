@@ -115,6 +115,17 @@
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/mLinearLayoutTruthTable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/default_color"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/mLinearLayoutDiagram"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -123,9 +134,9 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
+                android:background="@color/default_color"
                 android:orientation="vertical"
                 android:visibility="gone"
-                android:background="@color/default_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -135,9 +146,9 @@
                     android:id="@+id/mLinearLayoutDynamicDiagram"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:layout_weight="1" />
+                    android:orientation="vertical" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -150,8 +161,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/diagram_6_xnor_choice_1"
                         android:fontFamily="@font/courierprime_regular"
-                        android:text="Button"
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
@@ -161,8 +172,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/diagram_6_xnor_choice_2"
                         android:fontFamily="@font/courierprime_regular"
-                        android:text="Button"
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
@@ -172,8 +183,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/diagram_6_xnor_choice_3"
                         android:fontFamily="@font/courierprime_regular"
-                        android:text="Button"
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
@@ -183,8 +194,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/diagram_6_xnor_choice_4"
                         android:fontFamily="@font/courierprime_regular"
-                        android:text="Button"
                         android:textSize="24sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -267,7 +278,7 @@
                 android:background="@drawable/ic_background"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
