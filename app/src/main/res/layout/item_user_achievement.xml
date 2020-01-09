@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/default_color"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/default_color"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="4dp">
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:padding="0dp"
+                app:srcCompat="@drawable/ic_achievement" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <ImageView
+                android:id="@+id/mImageViewUserAchievementsStar1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="4dp"
+                app:srcCompat="@drawable/ic_starleftlocked" />
+
+            <ImageView
+                android:id="@+id/mImageViewUserAchievementsStar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="4dp"
+                app:srcCompat="@drawable/ic_starmiddlelocked" />
+
+            <ImageView
+                android:id="@+id/mImageViewUserAchievementsStar3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="4dp"
+                app:srcCompat="@drawable/ic_starrightlocked" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="4dp"
+                android:translationZ="1dp">
+
+                <TextView
+                    android:id="@+id/mTextViewUserAchievementsAverageTimeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/courierprime_bold"
+                    android:text="Avg. Time:"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/mTextViewUserAchievementsAverageTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/courierprime_bold"
+                    android:text="99"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/courierprime_bold"
+                    android:text="Level:"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/mTextViewUserAchievementsLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/courierprime_bold"
+                    android:text="9"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <TextView
+                    android:id="@+id/mTextViewUserAchievementsNumberOfTriesText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/courierprime_bold"
+                    android:text="Tries:"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/mTextViewUserAchievementsNumberOfTries"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/courierprime_bold"
+                    android:text="9"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

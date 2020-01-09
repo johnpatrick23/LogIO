@@ -28,6 +28,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.oneclique.logio.LogIOSQLite.LogIOSQLiteModel.QuestionModel;
+import com.oneclique.logio.LogIOSQLite.LogIOSQLiteModel.UserAchievementsModel;
+import com.oneclique.logio.LogIOSQLite.LogIOSQLiteModel.UserLogsModel;
+import com.oneclique.logio.LogIOSQLite.LogIOSQLiteModel.UsersModel;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
@@ -52,14 +57,14 @@ public class AppCompatActivityHelper extends AppCompatActivity implements Reques
 
     protected void SnackBarMessage(String Message){
         View parentLayout = findViewById(android.R.id.content);
-        Snackbar.make(parentLayout, Message, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(parentLayout, Message, Snackbar.LENGTH_SHORT).show();
     }
 
     protected void FullscreenDialog(Dialog dialog){
         Objects.requireNonNull(dialog.getWindow())
                 .setLayout(WindowManager.LayoutParams.MATCH_PARENT,
                         WindowManager.LayoutParams.MATCH_PARENT);
-
+        dialog.setCancelable(false);
         dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -187,6 +192,95 @@ public class AppCompatActivityHelper extends AppCompatActivity implements Reques
         return Typeface.createFromAsset(getAssets(), "courierprime_italic.ttf");
     }
 
+    public void UserAchievementsModelLog(UserAchievementsModel userAchievementsModel){
+        String getA_id = userAchievementsModel.getA_id() == null ? "null" : userAchievementsModel.getA_id();
+        String getA_time_finished = userAchievementsModel.getA_time_finished() == null ? "null" : userAchievementsModel.getA_time_finished();
+        String getA_description = userAchievementsModel.getA_description() == null  ? "null" : userAchievementsModel.getA_description();
+        String getA_level = userAchievementsModel.getA_level() == null  ? "null" : userAchievementsModel.getA_level();
+        String getA_number_of_tries = userAchievementsModel.getA_number_of_tries() == null  ? "null" : userAchievementsModel.getA_number_of_tries();
+        String getA_stars = userAchievementsModel.getA_stars() == null  ? "null" : userAchievementsModel.getA_stars();
+        String getA_username = userAchievementsModel.getA_username() == null  ? "null" : userAchievementsModel.getA_username();
+
+        Log.i(TAG, "getA_id: " + getA_id);
+        Log.i(TAG, "getA_time_finished: " + getA_time_finished);
+        Log.i(TAG, "getA_description: " + getA_description);
+        Log.i(TAG, "getA_number_of_tries: " + getA_number_of_tries);
+        Log.i(TAG, "getA_stars: " + getA_stars);
+        Log.i(TAG, "getA_level: " + getA_level);
+        Log.i(TAG, "getA_username: " + getA_username);
+    }
+
+    public void UserLogsModelLog(UserLogsModel userLogsModel){
+        String getA_id = userLogsModel.getA_id() == null ? "null" : userLogsModel.getA_id();
+        String getA_average_time = userLogsModel.getA_average_time() == null ? "null" : userLogsModel.getA_average_time();
+        String getA_level = userLogsModel.getA_level() == null  ? "null" : userLogsModel.getA_level();
+        String getA_popup_message_time = userLogsModel.getA_popup_message_time() == null  ? "null" : userLogsModel.getA_popup_message_time();
+        String getA_star = userLogsModel.getA_star() == null  ? "null" : userLogsModel.getA_star();
+        String getA_username = userLogsModel.getA_username() == null  ? "null" : userLogsModel.getA_username();
+
+        Log.i(TAG, "getA_id: " + getA_id);
+        Log.i(TAG, "getA_average_time: " + getA_average_time);
+        Log.i(TAG, "getA_level: " + getA_level);
+        Log.i(TAG, "getA_popup_message_time: " + getA_popup_message_time);
+        Log.i(TAG, "getA_star: " + getA_star);
+        Log.i(TAG, "getA_username: " + getA_username);
+    }
+
+    public void UsersModelLog(UsersModel usersModel){
+        String getA_id = usersModel.getA_id() == null ? "null" : usersModel.getA_id();
+        String getA_username = usersModel.getA_username() == null ? "null" : usersModel.getA_username();
+        String getA_last_used = usersModel.getA_last_used() == null ? "null" : usersModel.getA_last_used();
+        String getA_level_1_stars = usersModel.getA_level_1_stars() == null ? "null" : usersModel.getA_level_1_stars();
+        String getA_level_2_stars = usersModel.getA_level_2_stars() == null ? "null" : usersModel.getA_level_2_stars();
+        String getA_level_3_stars = usersModel.getA_level_3_stars() == null ? "null" : usersModel.getA_level_3_stars();
+        String getA_level_4_stars = usersModel.getA_level_4_stars() == null ? "null" : usersModel.getA_level_4_stars();
+        String getA_level_5_stars = usersModel.getA_level_5_stars() == null ? "null" : usersModel.getA_level_5_stars();
+        String getA_level_6_stars = usersModel.getA_level_6_stars() == null ? "null" : usersModel.getA_level_6_stars();
+        String getA_level_7_stars = usersModel.getA_level_7_stars() == null ? "null" : usersModel.getA_level_7_stars();
+        String getA_number_of_access = usersModel.getA_number_of_access() == null ? "null" : usersModel.getA_number_of_access();
+        String getA_hint = usersModel.getA_hint() == null ? "null" : usersModel.getA_hint();
+        String getA_add_time = usersModel.getA_add_time() == null ? "null" : usersModel.getA_add_time();
+        String getA_slow_time = usersModel.getA_slow_time() == null ? "null" : usersModel.getA_slow_time();
+
+        Log.i(TAG, "getA_id: " + getA_id);
+        Log.i(TAG, "getA_username: " + getA_username);
+        Log.i(TAG, "getA_last_used: " + getA_last_used);
+        Log.i(TAG, "getA_level_1_stars: " + getA_level_1_stars);
+        Log.i(TAG, "getA_level_2_stars: " + getA_level_2_stars);
+        Log.i(TAG, "getA_level_3_stars: " + getA_level_3_stars);
+        Log.i(TAG, "getA_level_4_stars: " + getA_level_4_stars);
+        Log.i(TAG, "getA_level_5_stars: " + getA_level_5_stars);
+        Log.i(TAG, "getA_level_6_stars: " + getA_level_6_stars);
+        Log.i(TAG, "getA_level_7_stars: " + getA_level_7_stars);
+        Log.i(TAG, "getA_number_of_access: " + getA_number_of_access);
+        Log.i(TAG, "getA_hint: " + getA_hint);
+        Log.i(TAG, "getA_add_time: " + getA_add_time);
+        Log.i(TAG, "getA_slow_time: " + getA_slow_time);
+    }
+
+    public void QuestionModelLog(QuestionModel questionModel){
+
+        String getA_id = questionModel.getA_id() == null ? "null" : questionModel.getA_id();
+        String getA_level = questionModel.getA_level() == null ? "null" : questionModel.getA_level();
+        String getA_questiontype = questionModel.getA_questiontype() == null ? "null" : questionModel.getA_questiontype();
+        String getA_question = questionModel.getA_question() == null ? "null" : questionModel.getA_question();
+        String getA_choices = questionModel.getA_choices() == null ? "null" : questionModel.getA_choices();
+        String getA_answer = questionModel.getA_answer() == null ? "null" : questionModel.getA_answer();
+        String getA_timeduration = questionModel.getA_timeduration() == null ? "null" : questionModel.getA_timeduration();
+        String getA_category = questionModel.getA_category() == null ? "null" : questionModel.getA_category();
+        String getA_instruction = questionModel.getA_instruction() == null ? "null" : questionModel.getA_instruction();
+
+        Log.i(TAG, "getA_id: " + getA_id);
+        Log.i(TAG, "getA_level: " + getA_level);
+        Log.i(TAG, "getA_questiontype: " + getA_questiontype);
+        Log.i(TAG, "getA_question: " + getA_question);
+        Log.i(TAG, "getA_choices: " + getA_choices);
+        Log.i(TAG, "getA_answer: " + getA_answer);
+        Log.i(TAG, "getA_timeduration: " + getA_timeduration);
+        Log.i(TAG, "getA_category: " + getA_category);
+        Log.i(TAG, "getA_instruction: " + getA_instruction);
+    }
+
     class AllLevels {
         Dialog dialog;
         ImageButton[] mImageButtonLevels;
@@ -261,9 +355,6 @@ public class AppCompatActivityHelper extends AppCompatActivity implements Reques
 
         }
 
-        void show(){
-            dialog.show();
-        }
     }
 
     class User {
@@ -295,20 +386,25 @@ public class AppCompatActivityHelper extends AppCompatActivity implements Reques
 
         ImageView[] mImageViewCompletedStars;
         TextView mTextViewCompletedTime;
+        TextView mTextViewCompletedAverageTime;
 
-        ImageButton mImageButtonCompletedHome;
+        TextView mTextViewCompletedSelectedLevel;
+
+        ImageButton mImageButtonCompletedOk;
         ImageButton mImageViewCompletedRestart;
-        ImageButton mImageButtonCompletedPlay;
+        ImageButton mImageButtonCompletedNext;
 
         LevelComplete(Context context){
             dialog = new Dialog(context);
             dialog.setContentView(R.layout.dialog_level_complete);
             FullscreenDialog(dialog);
 
-            mImageButtonCompletedPlay = dialog.findViewById(R.id.mImageButtonCompletedPlay);
-            mImageButtonCompletedHome = dialog.findViewById(R.id.mImageButtonCompletedHome);
+            mTextViewCompletedSelectedLevel = dialog.findViewById(R.id.mTextViewCompletedSelectedLevel);
+            mImageButtonCompletedNext = dialog.findViewById(R.id.mImageButtonCompletedNext);
+            mImageButtonCompletedOk = dialog.findViewById(R.id.mImageButtonCompletedOk);
             mImageViewCompletedRestart = dialog.findViewById(R.id.mImageViewCompletedRestart);
             mTextViewCompletedTime = dialog.findViewById(R.id.mTextViewCompletedTime);
+            mTextViewCompletedAverageTime = dialog.findViewById(R.id.mTextViewCompletedAverageTime);
 
             mImageViewCompletedStars = new ImageView[]{
                     dialog.findViewById(R.id.mImageViewCompletedStar1),
@@ -363,6 +459,7 @@ public class AppCompatActivityHelper extends AppCompatActivity implements Reques
     class Items {
         Dialog dialog;
 
+        TextView mTextViewItemsRemainingPoints;
         TextView mTextViewHintItemCount;
         ImageButton mImageButtonHint;
         ImageButton mImageButtonAddHint;
@@ -377,13 +474,20 @@ public class AppCompatActivityHelper extends AppCompatActivity implements Reques
         ImageButton mImageButtonAddTime;
         ImageButton mImageButtonAddAddTime;
         ImageButton mImageButtonRestartAddTime;
-        Button mButtonItemPlay;
+        ImageButton mImageButtonItemHome;
+
+        int hint = 0;
+        int slowTime = 0;
+        int addTime = 0;
+        int remaining = 0;
 
 
-        Items(Context context){
+        Items(Context context, int points){
             dialog = new Dialog(context);
             dialog.setContentView(R.layout.dialog_items);
             FullscreenDialog(dialog);
+
+            mTextViewItemsRemainingPoints = dialog.findViewById(R.id.mTextViewItemsRemainingPoints);
 
             mTextViewHintItemCount = dialog.findViewById(R.id.mTextViewHintItemCount);
             mImageButtonHint = dialog.findViewById(R.id.mImageButtonHint);
@@ -399,7 +503,100 @@ public class AppCompatActivityHelper extends AppCompatActivity implements Reques
             mImageButtonAddTime = dialog.findViewById(R.id.mImageButtonAddTime);
             mImageButtonAddAddTime = dialog.findViewById(R.id.mImageButtonAddAddTime);
             mImageButtonRestartAddTime = dialog.findViewById(R.id.mImageButtonRestartAddTime);
-            mButtonItemPlay = dialog.findViewById(R.id.mButtonItemPlay);
+
+            mImageButtonItemHome = dialog.findViewById(R.id.mImageButtonItemHome);
+
+            mTextViewItemsRemainingPoints.setText(String.valueOf(points));
+
+            //region Hint
+            mImageButtonAddHint.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    remaining = Integer.parseInt(mTextViewItemsRemainingPoints.getText().toString());
+                    hint = Integer.parseInt(mTextViewHintItemCount.getText().toString());
+                    if(remaining != 0){
+                        hint++;
+                        remaining--;
+                    }
+                    mTextViewItemsRemainingPoints.setText(String.valueOf(remaining));
+                    mTextViewHintItemCount.setText(String.valueOf(hint));
+                }
+            });
+
+            mImageButtonRestartHint.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    remaining = Integer.parseInt(mTextViewItemsRemainingPoints.getText().toString());
+                    hint = Integer.parseInt(mTextViewHintItemCount.getText().toString());
+                    if(hint != 0){
+                        remaining += hint;
+                        hint = 0;
+                    }
+                    mTextViewItemsRemainingPoints.setText(String.valueOf(remaining));
+                    mTextViewHintItemCount.setText(String.valueOf(hint));
+                }
+            });
+            //endregion
+
+            //region Slow Time
+            mImageButtonAddSlow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    remaining = Integer.parseInt(mTextViewItemsRemainingPoints.getText().toString());
+                    slowTime = Integer.parseInt(mTextViewSlowItemCount.getText().toString());
+                    if(remaining != 0){
+                        slowTime++;
+                        remaining--;
+                    }
+                    mTextViewItemsRemainingPoints.setText(String.valueOf(remaining));
+                    mTextViewSlowItemCount.setText(String.valueOf(slowTime));
+                }
+            });
+
+            mImageButtonRestartSlow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    remaining = Integer.parseInt(mTextViewItemsRemainingPoints.getText().toString());
+                    slowTime = Integer.parseInt(mTextViewSlowItemCount.getText().toString());
+                    if(slowTime != 0){
+                        remaining += slowTime;
+                        slowTime = 0;
+                    }
+                    mTextViewItemsRemainingPoints.setText(String.valueOf(remaining));
+                    mTextViewSlowItemCount.setText(String.valueOf(slowTime));
+                }
+            });
+            //endregion
+
+            //region Add Time
+            mImageButtonAddAddTime.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    remaining = Integer.parseInt(mTextViewItemsRemainingPoints.getText().toString());
+                    addTime = Integer.parseInt(mTextViewAddTimeItemCount.getText().toString());
+                    if(remaining != 0){
+                        addTime++;
+                        remaining--;
+                    }
+                    mTextViewItemsRemainingPoints.setText(String.valueOf(remaining));
+                    mTextViewAddTimeItemCount.setText(String.valueOf(addTime));
+                }
+            });
+
+            mImageButtonRestartAddTime.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    remaining = Integer.parseInt(mTextViewItemsRemainingPoints.getText().toString());
+                    addTime = Integer.parseInt(mTextViewAddTimeItemCount.getText().toString());
+                    if(addTime != 0){
+                        remaining += addTime;
+                        addTime = 0;
+                    }
+                    mTextViewItemsRemainingPoints.setText(String.valueOf(remaining));
+                    mTextViewAddTimeItemCount.setText(String.valueOf(addTime));
+                }
+            });
+            //endregion
 
         }
 
@@ -416,6 +613,53 @@ public class AppCompatActivityHelper extends AppCompatActivity implements Reques
             FullscreenDialog(dialog);
             mTextViewInstruction = dialog.findViewById(R.id.mTextViewInstruction);
             mImageButtonOk = dialog.findViewById(R.id.mImageButtonOk);
+        }
+    }
+
+    class Introduction {
+        Dialog dialog;
+        ImageButton mImageButtonOk;
+
+        Introduction(Context context, int level){
+            dialog = new Dialog(context);
+            switch (level){
+                case 0:{
+                    dialog.setContentView(R.layout.dialog_introduction_number_system);
+                    mImageButtonOk = dialog.findViewById(R.id.mImageButtonIntroNumSysOk);
+                    break;
+                }
+                case 1:{
+                    dialog.setContentView(R.layout.dialog_introduction_not_system);
+                    mImageButtonOk = dialog.findViewById(R.id.mImageButtonIntroNOTGateOk);
+                    break;
+                }
+                case 2:{
+                    dialog.setContentView(R.layout.dialog_introduction_and_system);
+                    mImageButtonOk = dialog.findViewById(R.id.mImageButtonIntroANDGateOk);
+                    break;
+                }
+                case 3:{
+                    dialog.setContentView(R.layout.dialog_introduction_or_system);
+                    mImageButtonOk = dialog.findViewById(R.id.mImageButtonIntroORGateOk);
+                    break;
+                }
+                case 4:{
+                    dialog.setContentView(R.layout.dialog_introduction_xor_system);
+                    mImageButtonOk = dialog.findViewById(R.id.mImageButtonIntroXORGateOk);
+                    break;
+                }
+                case 5:{
+                    dialog.setContentView(R.layout.dialog_introduction_xnor_system);
+                    mImageButtonOk = dialog.findViewById(R.id.mImageButtonIntroXNORGateOk);
+                    break;
+                }
+                case 6:{
+                    dialog.setContentView(R.layout.dialog_introduction_integrated_circuit);
+                    mImageButtonOk = dialog.findViewById(R.id.mImageButtonIntroIntegratedCircuitOk);
+                    break;
+                }
+            }
+            FullscreenDialog(dialog);
         }
     }
 
@@ -456,7 +700,6 @@ public class AppCompatActivityHelper extends AppCompatActivity implements Reques
             });
         }
     }
-
 
     class TimesUp {
         Dialog dialog;

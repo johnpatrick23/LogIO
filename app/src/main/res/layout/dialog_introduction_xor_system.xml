@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:background="@drawable/ic_gamepanel"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/courierprime_bold"
+            android:gravity="center"
+            android:text="Introduction for XOR Logic Gate"
+            android:textColor="#000000"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView33"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="Logic gates are the building blocks of digital electronics. It is an electronic circuit that has one or more input and only one output."
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView35"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/courierprime_bold"
+                            android:text="XOR Gate"
+                            android:textAlignment="center"
+                            android:textColor="#000000"
+                            android:textSize="24sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/textView13"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/courierprime_bold"
+                                    android:gravity="center"
+                                    android:text="A"
+                                    android:textColor="#000000"
+                                    android:textSize="24sp" />
+
+                                <TextView
+                                    android:id="@+id/textView51"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/courierprime_bold"
+                                    android:gravity="center"
+                                    android:text="B"
+                                    android:textColor="#000000"
+                                    android:textSize="24sp" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/imageView8"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                app:srcCompat="@drawable/ic_xor" />
+
+                            <TextView
+                                android:id="@+id/textView34"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/courierprime_bold"
+                                android:text="Q"
+                                android:textColor="#000000"
+                                android:textSize="24sp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/textView46"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/courierprime_bold"
+                            android:text="Boolean Expression Q = A ⊕ B"
+                            android:textAlignment="center"
+                            android:textColor="#000000"
+                            android:textSize="24sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView39"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="XOR Gate produces high (1) output when either of its two input are high (1) else if both input are high (1) or low (0), the output would be low (0)."
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView350"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/border_truth_table"
+                            android:fontFamily="@font/courierprime_bold"
+                            android:gravity="center"
+                            android:padding="16dp"
+                            android:text="Truth Table"
+                            android:textAlignment="center"
+                            android:textColor="#000000"
+                            android:textSize="24sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/border_truth_table"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/border_truth_table"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/textView348"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/border_truth_table"
+                                    android:fontFamily="@font/courierprime_bold"
+                                    android:gravity="center"
+                                    android:padding="16dp"
+                                    android:text="A"
+                                    android:textAlignment="center"
+                                    android:textAllCaps="false"
+                                    android:textColor="#000000"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textView50"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/border_truth_table"
+                                    android:fontFamily="@font/courierprime_bold"
+                                    android:gravity="center"
+                                    android:padding="16dp"
+                                    android:text="B"
+                                    android:textAlignment="center"
+                                    android:textAllCaps="false"
+                                    android:textColor="#000000"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textView45"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/border_truth_table"
+                                    android:fontFamily="@font/courierprime_bold"
+                                    android:gravity="center"
+                                    android:padding="16dp"
+                                    android:text="Q"
+                                    android:textAlignment="center"
+                                    android:textAllCaps="false"
+                                    android:textColor="#000000"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/border_truth_table"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/textView328"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/border_truth_table"
+                                    android:fontFamily="@font/courierprime_bold"
+                                    android:gravity="center"
+                                    android:padding="16dp"
+                                    android:text="0"
+                                    android:textAlignment="center"
+                                    android:textAllCaps="false"
+                                    android:textColor="#000000"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textView550"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/border_truth_table"
+                                    android:fontFamily="@font/courierprime_bold"
+                                    android:gravity="center"
+                                    android:padding="16dp"
+                                    android:text="0"
+                                    android:textAlignment="center"
+                                    android:textAllCaps="false"
+                                    android:textColor="#000000"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textView415"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/border_truth_table"
+                                    android:fontFamily="@font/courierprime_bold"
+                                    android:gravity="center"
+                                    android:padding="16dp"
+                                    android:text="0"
+                                    android:textAlignment="center"
+                                    android:textAllCaps="false"
+                                    android:textColor="#000000"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/border_truth_table"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/textView361"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/border_truth_table"
+                                    android:fontFamily="@font/courierprime_bold"
+                                    android:gravity="center"
+                                    android:padding="16dp"
+                                    android:text="0"
+                                    android:textAlignment="center"
+                                    android:textAllCaps="false"
+                                    android:textColor="#000000"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textView48"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/border_truth_table"
+                                    android:fontFamily="@font/courierprime_bold"
+                                    android:gravity="center"
+                                    android:padding="16dp"
+                                    android:text="1"
+                                    android:textAlignment="center"
+                                    android:textAllCaps="false"
+                                    android:textColor="#000000"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textView371"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/border_truth_table"
+                                    android:fontFamily="@font/courierprime_bold"
+                                    android:gravity="center"
+                                    android:padding="16dp"
+                                    android:text="1"
+                                    android:textAlignment="center"
+                                    android:textAllCaps="false"
+                                    android:textColor="#000000"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/border_truth_table"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/textView36"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/border_truth_table"
+                                    android:fontFamily="@font/courierprime_bold"
+                                    android:gravity="center"
+                                    android:padding="16dp"
+                                    android:text="1"
+                                    android:textAlignment="center"
+                                    android:textAllCaps="false"
+                                    android:textColor="#000000"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textView49"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/border_truth_table"
+                                    android:fontFamily="@font/courierprime_bold"
+                                    android:gravity="center"
+                                    android:padding="16dp"
+                                    android:text="0"
+                                    android:textAlignment="center"
+                                    android:textAllCaps="false"
+                                    android:textColor="#000000"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textView37"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/border_truth_table"
+                                    android:fontFamily="@font/courierprime_bold"
+                                    android:gravity="center"
+                                    android:padding="16dp"
+                                    android:text="1"
+                                    android:textAlignment="center"
+                                    android:textAllCaps="false"
+                                    android:textColor="#000000"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/border_truth_table"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/textView381"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/border_truth_table"
+                                    android:fontFamily="@font/courierprime_bold"
+                                    android:gravity="center"
+                                    android:padding="16dp"
+                                    android:text="1"
+                                    android:textAlignment="center"
+                                    android:textAllCaps="false"
+                                    android:textColor="#000000"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textView502"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/border_truth_table"
+                                    android:fontFamily="@font/courierprime_bold"
+                                    android:gravity="center"
+                                    android:padding="16dp"
+                                    android:text="1"
+                                    android:textAlignment="center"
+                                    android:textAllCaps="false"
+                                    android:textColor="#000000"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textView452"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/border_truth_table"
+                                    android:fontFamily="@font/courierprime_bold"
+                                    android:gravity="center"
+                                    android:padding="16dp"
+                                    android:text="0"
+                                    android:textAlignment="center"
+                                    android:textAllCaps="false"
+                                    android:textColor="#000000"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView47"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/courierprime_bold"
+                        android:text="A OR B but NOT BOTH gives Q"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="24sp" />
+
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/mImageButtonIntroXORGateOk"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="0dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/ic_okayicon" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

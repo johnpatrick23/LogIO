@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:background="@drawable/ic_gamepanel"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/courierprime_bold"
+            android:gravity="center"
+            android:text="Introduction for Number System"
+            android:textColor="#000000"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView33"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="The Number Systems are the technique to represent numbers in the computer architecture."
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/textView39"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="Every value being obtained or saved into computer memory has a defined number system."
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/textView40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="These Number Systems are the following:"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/textView41"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="1. Binary Number System"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/textView42"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="2. Decimal Number System"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/textView43"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="3. Octal Number System"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/textView44"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="4. Hexadecimal Number System"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+                <ImageButton
+                    android:id="@+id/mImageButtonIntroNumSysOk"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="0dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/ic_okayicon" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

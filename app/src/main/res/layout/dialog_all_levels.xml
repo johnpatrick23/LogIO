@@ -356,6 +356,7 @@
                         android:layout_height="wrap_content"
                         android:padding="0dp"
                         android:scaleType="fitCenter"
+                        android:visibility="invisible"
                         app:srcCompat="@drawable/ic_homeicon" />
                 </LinearLayout>
 
@@ -420,6 +421,7 @@
                         android:layout_height="wrap_content"
                         android:padding="0dp"
                         android:scaleType="fitCenter"
+                        android:visibility="invisible"
                         app:srcCompat="@drawable/ic_playicon" />
                 </LinearLayout>
 

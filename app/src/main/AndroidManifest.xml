@@ -17,15 +17,22 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_foreground"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".GameDragAndDropActivity"
-            android:screenOrientation="sensorLandscape"/>
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity
+            android:name=".UserLogsActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".AchievementsActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".GameDragAndDropActivity"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".GameActivity"
             android:screenOrientation="sensorLandscape" />

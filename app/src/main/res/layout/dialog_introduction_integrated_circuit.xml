@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:background="@drawable/ic_gamepanel"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/courierprime_bold"
+            android:gravity="center"
+            android:text="Introduction for \nIntegrated Circuit"
+            android:textColor="#000000"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView33"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="Integrated Circuits (IC) is a small silicon semiconductor crystal, called chip, containg the electronic components for the digital gates."
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/textView39"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="IC's are used to build digital circuits. Digital IC's are often categorized by its complexity as measured by the number of logic gates in a single package. The following are the levels of integration:"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/textView55"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="1. Small-scale Integration (SSI)."
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView57"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="2. Medium-scale Integration (MSI)"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView58"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="3. Large-scale Integration (LSI)"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView59"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="4. Very Large-scale Integration (VLSI)"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView60"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="Digital IC's are also classified with the circuit technology they belongs to which are the digital logic families:"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/textView61"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="1. TTL - transistor-transistor logic"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView62"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="2. ECL - emitter-coupled logic"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView63"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="3. MOS - metal-oxide semiconductor"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView64"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="4. CMOS - complementary metal-oxide semiconductor"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/mImageButtonIntroIntegratedCircuitOk"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="0dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/ic_okayicon" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

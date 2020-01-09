@@ -3,11 +3,30 @@ package com.oneclique.logio.LogIOSQLite.LogIOSQLiteModel;
 import java.io.Serializable;
 
 public class UserAchievementsModel implements Serializable {
+
     private String a_id;
     private String a_level;
     private String a_stars;
     private String a_time_finished;
     private String a_description;
+    private String a_number_of_tries;
+    private String a_username;
+
+    public String getA_username() {
+        return a_username;
+    }
+
+    public void setA_username(String a_username) {
+        this.a_username = a_username;
+    }
+
+    public String getA_number_of_tries() {
+        return a_number_of_tries;
+    }
+
+    public void setA_number_of_tries(String a_number_of_tries) {
+        this.a_number_of_tries = a_number_of_tries;
+    }
 
     public String getA_description() {
         return a_description;

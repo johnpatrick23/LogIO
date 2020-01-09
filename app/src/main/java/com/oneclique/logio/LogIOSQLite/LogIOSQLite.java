@@ -15,7 +15,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import static com.oneclique.logio.LogIOSQLite.SQLITE_VARIABLES.DB_NAME;
+import static com.oneclique.logio.LogIOSQLite.SQLITE_VARIABLES.DB_VERSION;
+
 public class LogIOSQLite extends SQLiteOpenHelper {
+
     private static final String TAG = "LogIOSQLite";
 
     private SQLiteDatabase db;
@@ -25,14 +29,16 @@ public class LogIOSQLite extends SQLiteOpenHelper {
     private static String DB_PATH;
 
     public LogIOSQLite(Context context) {
-        super(context, SQLITE_VARIABLES.DB_NAME, null, 1);
+        super(context, DB_NAME, null, DB_VERSION);
         this.context = context;
-        DB_PATH = context.getDatabasePath(SQLITE_VARIABLES.DB_NAME).getAbsolutePath();
+        DB_PATH = context.getDatabasePath(DB_NAME).getAbsolutePath();
         Log.i(TAG, "LogIOSQLite: " + DB_PATH);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) { }
+    public void onCreate(SQLiteDatabase db) {
+        createDatabase();
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -58,7 +64,7 @@ public class LogIOSQLite extends SQLiteOpenHelper {
     }
 
     private void copyDataBase() throws IOException {
-        InputStream mInput = context.getAssets().open(SQLITE_VARIABLES.DB_NAME);
+        InputStream mInput = context.getAssets().open(DB_NAME);
         String outFileName = DB_PATH;
         OutputStream mOutput = new FileOutputStream(outFileName);
         byte[] mBuffer = new byte[2024];
