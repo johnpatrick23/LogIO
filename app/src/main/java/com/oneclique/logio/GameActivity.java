@@ -205,14 +205,22 @@ public class GameActivity extends AppCompatActivityHelper {
                 findViewById(R.id.mLinearLayoutDragAndDropChoiceContainer1),
                 findViewById(R.id.mLinearLayoutDragAndDropChoiceContainer2),
                 findViewById(R.id.mLinearLayoutDragAndDropChoiceContainer3),
-                findViewById(R.id.mLinearLayoutDragAndDropChoiceContainer4)
+                findViewById(R.id.mLinearLayoutDragAndDropChoiceContainer4),
+                findViewById(R.id.mLinearLayoutDragAndDropChoiceContainer5),
+                findViewById(R.id.mLinearLayoutDragAndDropChoiceContainer6),
+                findViewById(R.id.mLinearLayoutDragAndDropChoiceContainer7),
+                findViewById(R.id.mLinearLayoutDragAndDropChoiceContainer8)
         };
 
         mImageViewDragAndDropChoices = new ImageView[]{
                 findViewById(R.id.mImageViewDragAndDropChoice1),
                 findViewById(R.id.mImageViewDragAndDropChoice2),
                 findViewById(R.id.mImageViewDragAndDropChoice3),
-                findViewById(R.id.mImageViewDragAndDropChoice4)
+                findViewById(R.id.mImageViewDragAndDropChoice4),
+                findViewById(R.id.mImageViewDragAndDropChoice5),
+                findViewById(R.id.mImageViewDragAndDropChoice6),
+                findViewById(R.id.mImageViewDragAndDropChoice7),
+                findViewById(R.id.mImageViewDragAndDropChoice8)
         };
 
         //endregion
@@ -637,14 +645,15 @@ public class GameActivity extends AppCompatActivityHelper {
         }
         QuestionModelLog(questionModelList.get(questionNumber));
         Log.i(TAG, "questionNumber: " + questionNumber);
+
+        mLinearLayoutDiagram.setVisibility(View.GONE);
+        mLinearLayoutTruthTable.setVisibility(View.GONE);
+        mLinearLayoutMultipleChoice.setVisibility(View.GONE);
+        mLinearLayoutIdentification.setVisibility(View.GONE);
+        mLinearLayoutDragAndDrop.setVisibility(View.GONE);
         switch (questionModelList.get(questionNumber).getA_questiontype()){
             case QuestionType.MULTIPLE_CHOICE:{
                 Log.i(TAG, "onCreate: MULTIPLE_CHOICE");
-                mLinearLayoutDiagram.setVisibility(View.GONE);
-                mLinearLayoutTruthTable.setVisibility(View.GONE);
-                mLinearLayoutMultipleChoice.setVisibility(View.VISIBLE);
-                mLinearLayoutIdentification.setVisibility(View.GONE);
-                mLinearLayoutDragAndDrop.setVisibility(View.GONE);
                 if(!questionModelList.get(questionNumber).getA_answer().isEmpty()){
                     setUpMultipleChoice(mLinearLayoutMultipleChoice, mTextViewMultipleChoiceQuestion,
                             mButtonMultipleChoiceChoices, questionModelList.get(questionNumber),
@@ -658,11 +667,6 @@ public class GameActivity extends AppCompatActivityHelper {
             }
             case QuestionType.DIAGRAM:{
                 Log.i(TAG, "onCreate: DIAGRAM");
-                mLinearLayoutDiagram.setVisibility(View.VISIBLE);
-                mLinearLayoutTruthTable.setVisibility(View.GONE);
-                mLinearLayoutMultipleChoice.setVisibility(View.GONE);
-                mLinearLayoutIdentification.setVisibility(View.GONE);
-                mLinearLayoutDragAndDrop.setVisibility(View.GONE);
 
                 if(!questionModelList.get(questionNumber).getA_answer().isEmpty()) {
                     setUpDiagram(mLinearLayoutDiagram, mLinearLayoutDynamicDiagram,
@@ -676,12 +680,6 @@ public class GameActivity extends AppCompatActivityHelper {
             }
             case QuestionType.DRAG_AND_DROP:{
                 Log.i(TAG, "onCreate: DRAG_AND_DROP");
-
-                mLinearLayoutDiagram.setVisibility(View.GONE);
-                mLinearLayoutTruthTable.setVisibility(View.GONE);
-                mLinearLayoutMultipleChoice.setVisibility(View.GONE);
-                mLinearLayoutIdentification.setVisibility(View.GONE);
-                mLinearLayoutDragAndDrop.setVisibility(View.VISIBLE);
                 if(!questionModelList.get(questionNumber).getA_answer().isEmpty()) {
                     setUpDragAndDrop(mLinearLayoutDragAndDrop, questionModelList.get(questionNumber),
                             mLinearLayoutDragAndDropDiagramContainer, mLinearLayoutDragAndDropChoiceContainers,
@@ -695,11 +693,6 @@ public class GameActivity extends AppCompatActivityHelper {
             }
             case QuestionType.IDENTIFICATION:{
                 Log.i(TAG, "onCreate: IDENTIFICATION");
-                mLinearLayoutDiagram.setVisibility(View.GONE);
-                mLinearLayoutTruthTable.setVisibility(View.GONE);
-                mLinearLayoutMultipleChoice.setVisibility(View.GONE);
-                mLinearLayoutIdentification.setVisibility(View.VISIBLE);
-                mLinearLayoutDragAndDrop.setVisibility(View.GONE);
 
                 if(!questionModelList.get(questionNumber).getA_answer().isEmpty()) {
                     setUpIdentification(mLinearLayoutIdentification, mTextViewIdentificationQuestion,
@@ -713,12 +706,6 @@ public class GameActivity extends AppCompatActivityHelper {
                 break;
             }
             case QuestionType.TRUTH_TABLE:{
-                Log.i(TAG, "onCreate: TRUTH_TABLE");
-                mLinearLayoutDiagram.setVisibility(View.GONE);
-                mLinearLayoutTruthTable.setVisibility(View.VISIBLE);
-                mLinearLayoutMultipleChoice.setVisibility(View.GONE);
-                mLinearLayoutIdentification.setVisibility(View.GONE);
-                mLinearLayoutDragAndDrop.setVisibility(View.GONE);
 
                 if(!questionModelList.get(questionNumber).getA_answer().isEmpty()) {
                     setUpTruthTable(mLinearLayoutTruthTable, questionModelList.get(questionNumber),
@@ -757,12 +744,15 @@ public class GameActivity extends AppCompatActivityHelper {
         final TimesUp timesUp = new TimesUp(GameActivity.this);
         final Correct correct = new Correct(GameActivity.this);
         remainingTimeInQuestion = 0;
+
+        howToPlay.mTextViewInstruction.setText(questionModel.getA_instruction());
+        popupMessageTimer.resume();
         mTextViewGameNumberOfQuestion.setText(( (questionNumber + 1) + "/5"));
-        mLinearLayoutDragAndDrop.setVisibility(View.VISIBLE);
         countDownTimer = new CountDownTimer((Integer.parseInt(questionModel.getA_timeduration()) * 1000), (1000)) {
             @Override
             public void onTick(long millisUntilFinished) {
                 remainingTimeInQuestion = (int)millisUntilFinished/1000;
+                remainingTime = (int)millisUntilFinished/1000;
                 mTextViewGameTimer.setText(String.valueOf(millisUntilFinished/1000));
             }
 
@@ -789,6 +779,35 @@ public class GameActivity extends AppCompatActivityHelper {
                 }
             }
         };
+        howToPlay.dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                howToPlay.dialog.cancel();
+                popupMessageTimer.pause();
+                Log.i(TAG, "Line 1133: popupMessageTimer.pause();");
+            }
+        });
+
+
+
+        howToPlay.mImageButtonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                howToPlay.dialog.cancel();
+                popupMessageTimer.pause();
+                mLinearLayoutDragAndDrop.setVisibility(View.VISIBLE);
+                Log.i(TAG, "Line 1149: popupMessageTimer.pause();");
+                countDownTimer.start();
+            }
+        });
+        howToPlay.dialog.show();
+
+
+        for(int i = 0; i < mLinearLayoutDragAndDropChoiceContainers.length; i++){
+            mImageViewDragAndDropChoices[i].setVisibility(View.VISIBLE);
+            mLinearLayoutDragAndDropChoiceContainers[i].setVisibility(View.VISIBLE);
+
+        }
         LinearLayout[] mLinearLayoutDragAndDropAnswers = null;
         switch (questionModel.getA_category()){
             case QuestionCategory.AND:{
@@ -877,6 +896,85 @@ public class GameActivity extends AppCompatActivityHelper {
                 }
 
                 break;
+            }case QuestionCategory.INTEGRATED_CIRCUIT:{
+                int dragAndDrop = 0;
+                View dragAndDropLayout = null;
+                switch (questionModel.getA_question()){
+                    case "drag_and_drop_4002":{
+                        dragAndDrop =  R.layout.drag_and_drop_4002;
+                        dragAndDropLayout = getLayoutInflater()
+                                .inflate(dragAndDrop, mLinearLayoutDragAndDropDiagramContainer, false);
+                        mLinearLayoutDragAndDropDiagramContainer.removeAllViews();
+                        mLinearLayoutDragAndDropDiagramContainer.addView(dragAndDropLayout);
+                        mLinearLayoutDragAndDropAnswers = new LinearLayout[]{
+                                dragAndDropLayout.findViewById(R.id.mLinearLayout4002Answer1),
+                                dragAndDropLayout.findViewById(R.id.mLinearLayout4002Answer2)
+                        };
+                        break;
+                    }
+                    case "drag_and_drop_10107":{
+                        dragAndDrop =  R.layout.drag_and_drop_10107;
+                        dragAndDropLayout = getLayoutInflater()
+                                .inflate(dragAndDrop, mLinearLayoutDragAndDropDiagramContainer, false);
+                        mLinearLayoutDragAndDropDiagramContainer.removeAllViews();
+                        mLinearLayoutDragAndDropDiagramContainer.addView(dragAndDropLayout);
+                        mLinearLayoutDragAndDropAnswers = new LinearLayout[]{
+                                dragAndDropLayout.findViewById(R.id.mLinearLayout10107Answer1),
+                                dragAndDropLayout.findViewById(R.id.mLinearLayout10107Answer2),
+                                dragAndDropLayout.findViewById(R.id.mLinearLayout10107Answer3)
+                        };
+                        break;
+                    }
+                    case "drag_and_drop_7402":{
+                        dragAndDrop =  R.layout.drag_and_drop_7402;
+                        dragAndDropLayout = getLayoutInflater()
+                                .inflate(dragAndDrop, mLinearLayoutDragAndDropDiagramContainer, false);
+                        mLinearLayoutDragAndDropDiagramContainer.removeAllViews();
+                        mLinearLayoutDragAndDropDiagramContainer.addView(dragAndDropLayout);
+                        mLinearLayoutDragAndDropAnswers = new LinearLayout[]{
+                                dragAndDropLayout.findViewById(R.id.mLinearLayout7402Answer1),
+                                dragAndDropLayout.findViewById(R.id.mLinearLayout7402Answer2),
+                                dragAndDropLayout.findViewById(R.id.mLinearLayout7402Answer3),
+                                dragAndDropLayout.findViewById(R.id.mLinearLayout7402Answer4)
+                        };
+                        break;
+                    }
+                    case "drag_and_drop_7404":{
+                        dragAndDrop =  R.layout.drag_and_drop_7404;
+                        dragAndDropLayout = getLayoutInflater()
+                                .inflate(dragAndDrop, mLinearLayoutDragAndDropDiagramContainer, false);
+                        mLinearLayoutDragAndDropDiagramContainer.removeAllViews();
+                        mLinearLayoutDragAndDropDiagramContainer.addView(dragAndDropLayout);
+                        mLinearLayoutDragAndDropAnswers = new LinearLayout[]{
+                                dragAndDropLayout.findViewById(R.id.mLinearLayout7404Answer1),
+                                dragAndDropLayout.findViewById(R.id.mLinearLayout7404Answer2),
+                                dragAndDropLayout.findViewById(R.id.mLinearLayout7404Answer3),
+                                dragAndDropLayout.findViewById(R.id.mLinearLayout7404Answer4),
+                                dragAndDropLayout.findViewById(R.id.mLinearLayout7404Answer5),
+                                dragAndDropLayout.findViewById(R.id.mLinearLayout7404Answer6)
+                        };
+                        break;
+                    }
+                    case "drag_and_drop_7400":{
+                        dragAndDrop =  R.layout.drag_and_drop_7400;
+                        dragAndDropLayout = getLayoutInflater()
+                                .inflate(dragAndDrop, mLinearLayoutDragAndDropDiagramContainer, false);
+                        mLinearLayoutDragAndDropDiagramContainer.removeAllViews();
+                        mLinearLayoutDragAndDropDiagramContainer.addView(dragAndDropLayout);
+                        mLinearLayoutDragAndDropAnswers = new LinearLayout[]{
+                                dragAndDropLayout.findViewById(R.id.mLinearLayout7400Answer1),
+                                dragAndDropLayout.findViewById(R.id.mLinearLayout7400Answer2),
+                                dragAndDropLayout.findViewById(R.id.mLinearLayout7400Answer3),
+                                dragAndDropLayout.findViewById(R.id.mLinearLayout7400Answer4)
+                        };
+                        break;
+                    }
+                    default:{break;}
+                }
+
+                for (LinearLayout  mLinearLayoutDragAndDropAnswer : mLinearLayoutDragAndDropAnswers) {
+                    mLinearLayoutDragAndDropAnswer.setOnDragListener(new MyDragListener());
+                }
             }
             default:{ break; }
 
@@ -890,12 +988,30 @@ public class GameActivity extends AppCompatActivityHelper {
             Log.i(TAG, "setUpDragAndDrop: " + choices.get(numbers.get(i)-1));
         }
 
+        for (int i = 0; i < mLinearLayoutDragAndDropChoiceContainers.length; i++) {
+            if(mLinearLayoutDragAndDropChoiceContainers[i].getChildCount() == 0){
+                Log.i(TAG, "mLinearLayoutDragAndDropChoiceContainers[" + i + "]: " + mLinearLayoutDragAndDropChoiceContainers[i].getChildCount());
+                ViewGroup owner = (ViewGroup) mImageViewDragAndDropChoices[i].getParent();
+                owner.removeAllViews();
+                ImageView imageView = mImageViewDragAndDropChoices[i];
+                mLinearLayoutDragAndDropChoiceContainers[i].addView(imageView);
+            }
+        }
+
         for (ImageView mImageViewDragAndDropChoice : mImageViewDragAndDropChoices){
             mImageViewDragAndDropChoice.setContentDescription("");
             mImageViewDragAndDropChoice.setImageDrawable(null);
             mImageViewDragAndDropChoice.setVisibility(View.GONE);
         }
-
+        for(int i = 0; i < mImageViewDragAndDropChoices.length; i++){
+            if(i < choices.size()){
+                mLinearLayoutDragAndDropChoiceContainers[i].setVisibility(View.VISIBLE);
+                mImageViewDragAndDropChoices[i].setVisibility(View.VISIBLE);
+            }else {
+                mImageViewDragAndDropChoices[i].setVisibility(View.GONE);
+                mLinearLayoutDragAndDropChoiceContainers[i].setVisibility(View.GONE);
+            }
+        }
         for(int i = 0; i < tmpChoices.size(); i++){
             Log.i(TAG, "setUpDragAndDrop: " + tmpChoices.get(i).toLowerCase());
 
@@ -964,6 +1080,7 @@ public class GameActivity extends AppCompatActivityHelper {
                     });
                     correct.dialog.show();
                 }
+                mLinearLayoutDragAndDrop.setVisibility(View.GONE);
                 totalRemainingTime += remainingTime;
             }
         });
@@ -1076,11 +1193,11 @@ public class GameActivity extends AppCompatActivityHelper {
                         Log.i(TAG, "logIOSQLite.executeWriter: " + ex.getMessage());
                     }
 
-                    remainingTime += 5;
-                    countDownTimer = new CountDownTimer((remainingTime * 1000), (1000)) {
+                    remainingTimeInQuestion += 5;
+                    countDownTimer = new CountDownTimer((remainingTimeInQuestion * 1000), (1000)) {
                         @Override
                         public void onTick(long millisUntilFinished) {
-                            remainingTime = (int)millisUntilFinished/1000;
+                            remainingTimeInQuestion = (int)millisUntilFinished/1000;
                             mTextViewGameTimer.setText(String.valueOf(millisUntilFinished/1000));
                         }
 
@@ -1125,16 +1242,6 @@ public class GameActivity extends AppCompatActivityHelper {
                 Log.i(TAG, "Line 1124: popupMessageTimer.pause();");
             }
         });
-
-        howToPlay.dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                howToPlay.dialog.cancel();
-                popupMessageTimer.pause();
-                Log.i(TAG, "Line 1133: popupMessageTimer.pause();");
-            }
-        });
-
         paused.mButtonPausedRestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1142,21 +1249,12 @@ public class GameActivity extends AppCompatActivityHelper {
             }
         });
 
-        howToPlay.mImageButtonOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                howToPlay.dialog.cancel();
-                popupMessageTimer.pause();
-                Log.i(TAG, "Line 1149: popupMessageTimer.pause();");
-                countDownTimer.start();
-            }
-        });
 
         options.mButtonOptionResume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 countDownTimer.resume();
-                mLinearLayoutTruthTable.setVisibility(View.VISIBLE);
+                mLinearLayoutDragAndDrop.setVisibility(View.VISIBLE);
                 options.dialog.cancel();
             }
         });
@@ -1165,7 +1263,7 @@ public class GameActivity extends AppCompatActivityHelper {
             @Override
             public void onClick(View v) {
                 countDownTimer.resume();
-                mLinearLayoutTruthTable.setVisibility(View.VISIBLE);
+                mLinearLayoutDragAndDrop.setVisibility(View.VISIBLE);
                 paused.dialog.cancel();
             }
         });
@@ -1183,7 +1281,7 @@ public class GameActivity extends AppCompatActivityHelper {
             @Override
             public void onClick(View v) {
                 countDownTimer.pause();
-                mLinearLayoutTruthTable.setVisibility(View.GONE);
+                mLinearLayoutDragAndDrop.setVisibility(View.GONE);
                 popupMessageTimer.resume();
                 Log.i(TAG, "Line 1186: popupMessageTimer.resume()");
                 paused.dialog.show();
@@ -1194,7 +1292,7 @@ public class GameActivity extends AppCompatActivityHelper {
             @Override
             public void onClick(View v) {
                 countDownTimer.pause();
-                mLinearLayoutTruthTable.setVisibility(View.GONE);
+                mLinearLayoutDragAndDrop.setVisibility(View.GONE);
                 popupMessageTimer.resume();
                 Log.i(TAG, "Line 1197: popupMessageTimer.resume();");
                 howToPlay.mTextViewInstruction.setText(questionModel.getA_instruction());
@@ -1204,7 +1302,7 @@ public class GameActivity extends AppCompatActivityHelper {
                         countDownTimer.resume();
                         popupMessageTimer.pause();
                         Log.i(TAG, "Line 1205: popupMessageTimer.pause();");
-                        mLinearLayoutTruthTable.setVisibility(View.VISIBLE);
+                        mLinearLayoutDragAndDrop.setVisibility(View.VISIBLE);
                         howToPlay.dialog.cancel();
                     }
                 });
@@ -1218,7 +1316,7 @@ public class GameActivity extends AppCompatActivityHelper {
             @Override
             public void onClick(View v) {
                 countDownTimer.pause();
-                mLinearLayoutTruthTable.setVisibility(View.GONE);
+                mLinearLayoutDragAndDrop.setVisibility(View.GONE);
                 options.dialog.show();
             }
         });
@@ -1233,10 +1331,8 @@ public class GameActivity extends AppCompatActivityHelper {
         });
 
         //endregion
-        howToPlay.mTextViewInstruction.setText(questionModel.getA_instruction());
-        popupMessageTimer.resume();
         Log.i(TAG, "Line 1237: popupMessageTimer.resume()");
-        howToPlay.dialog.show();
+        //mImageButtonGameHelp.callOnClick();
 
     }
 
@@ -1319,8 +1415,10 @@ public class GameActivity extends AppCompatActivityHelper {
         final Correct correct = new Correct(GameActivity.this);
 
         mTextViewGameNumberOfQuestion.setText(( (questionNumber + 1) + "/5"));
-        mLinearLayoutTruthTable.setVisibility(View.VISIBLE);
 
+        howToPlay.mTextViewInstruction.setText(questionModel.getA_instruction());
+        popupMessageTimer.resume();
+        Log.i(TAG, "Line 1782: popupMessageTimer.resume()");
 
         countDownTimer = new CountDownTimer((Integer.parseInt(questionModel.getA_timeduration()) * 1000), (1000)) {
             @Override
@@ -1352,6 +1450,27 @@ public class GameActivity extends AppCompatActivityHelper {
                 }
             }
         };
+        howToPlay.dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                howToPlay.dialog.cancel();
+                popupMessageTimer.pause();
+                Log.i(TAG, "Line 1687: popupMessageTimer.pause();");
+            }
+        });
+
+        howToPlay.mImageButtonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                howToPlay.dialog.cancel();
+                popupMessageTimer.pause();
+                mLinearLayoutTruthTable.setVisibility(View.VISIBLE);
+                Log.i(TAG, "Line 1696: popupMessageTimer.pause();");
+                countDownTimer.start();
+            }
+        });
+
+        howToPlay.dialog.show();
 
         /*mTextViewMultipleChoiceQuestion.setText(questionModel.getA_question());
         if(questionModel.getA_question().toLowerCase().isEmpty()){
@@ -1503,6 +1622,7 @@ public class GameActivity extends AppCompatActivityHelper {
                         });
                         correct.dialog.show();
                     }
+                    mLinearLayoutTruthTable.setVisibility(View.GONE);
                     totalRemainingTime += remainingTime;
                 }
             });
@@ -1680,24 +1800,7 @@ public class GameActivity extends AppCompatActivityHelper {
             }
         });
 
-        howToPlay.dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                howToPlay.dialog.cancel();
-                popupMessageTimer.pause();
-                Log.i(TAG, "Line 1687: popupMessageTimer.pause();");
-            }
-        });
 
-        howToPlay.mImageButtonOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                howToPlay.dialog.cancel();
-                popupMessageTimer.pause();
-                Log.i(TAG, "Line 1696: popupMessageTimer.pause();");
-                countDownTimer.start();
-            }
-        });
 
         options.mButtonOptionResume.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1778,10 +1881,7 @@ public class GameActivity extends AppCompatActivityHelper {
         });
 
         //endregion
-        howToPlay.mTextViewInstruction.setText(questionModel.getA_instruction());
-        popupMessageTimer.resume();
-        Log.i(TAG, "Line 1782: popupMessageTimer.resume()");
-        howToPlay.dialog.show();
+
     }
     //endregion
 
@@ -1804,9 +1904,15 @@ public class GameActivity extends AppCompatActivityHelper {
         final Options options = new Options(GameActivity.this);
         final TimesUp timesUp = new TimesUp(GameActivity.this);
         final Correct correct = new Correct(GameActivity.this);
+        final Wrong wrong = new Wrong(GameActivity.this);
+
 
         mTextViewGameNumberOfQuestion.setText(( (questionNumber + 1) + "/5"));
-        mLinearLayoutDiagram.setVisibility(View.VISIBLE);
+
+        howToPlay.mTextViewInstruction.setText(questionModel.getA_instruction());
+        popupMessageTimer.resume();
+        Log.i(TAG, "Line 2200: popupMessageTimer.resume()");
+
         countDownTimer = new CountDownTimer((Integer.parseInt(questionModel.getA_timeduration()) * 1000), (1000)) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -1837,6 +1943,27 @@ public class GameActivity extends AppCompatActivityHelper {
                 }
             }
         };
+        howToPlay.dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                howToPlay.dialog.cancel();
+                popupMessageTimer.pause();
+                Log.i(TAG, "Line 2105: popupMessageTimer.pause();");
+            }
+        });
+
+        howToPlay.mImageButtonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                howToPlay.dialog.cancel();
+                popupMessageTimer.pause();
+                mLinearLayoutDiagram.setVisibility(View.VISIBLE);
+                Log.i(TAG, "Line 2114: popupMessageTimer.pause();");
+                countDownTimer.start();
+            }
+        });
+
+        howToPlay.dialog.show();
 
         /*mTextViewMultipleChoiceQuestion.setText(questionModel.getA_question());
         if(questionModel.getA_question().toLowerCase().isEmpty()){
@@ -1919,7 +2046,7 @@ public class GameActivity extends AppCompatActivityHelper {
                         countDownTimer.pause();
                         remainingTime = Integer.parseInt(mTextViewGameTimer.getText().toString());
                         countDownTimer.cancel();
-                        Toast.makeText(GameActivity.this, "Correct", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(GameActivity.this, "Correct", Toast.LENGTH_SHORT).show();
                         correct.dialog.show();
                         correct.mImageButtonCorrectOk.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -1932,10 +2059,17 @@ public class GameActivity extends AppCompatActivityHelper {
                         countDownTimer.pause();
                         remainingTime = Integer.parseInt(mTextViewGameTimer.getText().toString());
                         countDownTimer.cancel();
-                        Toast.makeText(GameActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
-                        setUpGameQuestions(questionNumber + 1, points);
-                        correct.dialog.cancel();
+                        wrong.mImageButtonWrongOk.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                wrong.dialog.cancel();
+                                setUpGameQuestions(questionNumber + 1, points);
+                            }
+                        });
+                        wrong.dialog.show();
+                        //Toast.makeText(GameActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
                     }
+                    mLinearLayoutDiagram.setVisibility(View.GONE);
                     totalRemainingTime += remainingTime;
                 }
             });
@@ -2087,6 +2221,7 @@ public class GameActivity extends AppCompatActivityHelper {
             }
         });
         //endregion
+
         //region Game buttons
 
         paused.dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -2095,25 +2230,6 @@ public class GameActivity extends AppCompatActivityHelper {
                 paused.dialog.cancel();
                 popupMessageTimer.pause();
                 Log.i(TAG, "Line 2096: popupMessageTimer.pause();");
-            }
-        });
-
-        howToPlay.dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                howToPlay.dialog.cancel();
-                popupMessageTimer.pause();
-                Log.i(TAG, "Line 2105: popupMessageTimer.pause();");
-            }
-        });
-
-        howToPlay.mImageButtonOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                howToPlay.dialog.cancel();
-                popupMessageTimer.pause();
-                Log.i(TAG, "Line 2114: popupMessageTimer.pause();");
-                countDownTimer.start();
             }
         });
 
@@ -2196,10 +2312,7 @@ public class GameActivity extends AppCompatActivityHelper {
         });
 
         //endregion
-        howToPlay.mTextViewInstruction.setText(questionModel.getA_instruction());
-        popupMessageTimer.resume();
-        Log.i(TAG, "Line 2200: popupMessageTimer.resume()");
-        howToPlay.dialog.show();
+
     }
     //endregion
 
@@ -2225,8 +2338,11 @@ public class GameActivity extends AppCompatActivityHelper {
         final Correct correct = new Correct(GameActivity.this);
 
         mTextViewGameNumberOfQuestion.setText(( (questionNumber + 1) + "/5"));
-        mLinearLayoutMultipleChoice.setVisibility(View.VISIBLE);
-
+        //mLinearLayoutMultipleChoice.setVisibility(View.VISIBLE);
+        howToPlay.mTextViewInstruction.setText(questionModel.getA_instruction());
+        popupMessageTimer.resume();
+        Log.i(TAG, "Line 2628: popupMessageTimer.resume()");
+        final Wrong wrong = new Wrong(GameActivity.this);
         countDownTimer = new CountDownTimer((Integer.parseInt(questionModel.getA_timeduration()) * 1000), (1000)) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -2258,7 +2374,26 @@ public class GameActivity extends AppCompatActivityHelper {
                 }
             }
         };
+        howToPlay.dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                howToPlay.dialog.cancel();
+                popupMessageTimer.pause();
+                Log.i(TAG, "Line 2532: popupMessageTimer.pause();");
+            }
+        });
 
+        howToPlay.mImageButtonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                howToPlay.dialog.cancel();
+                popupMessageTimer.pause();
+                mLinearLayoutMultipleChoice.setVisibility(View.VISIBLE);
+                Log.i(TAG, "Line 2541: popupMessageTimer.pause();");
+                countDownTimer.start();
+            }
+        });
+        howToPlay.dialog.show();
 
         mTextViewMultipleChoiceQuestion.setText(questionModel.getA_question());
 
@@ -2310,7 +2445,7 @@ public class GameActivity extends AppCompatActivityHelper {
                         countDownTimer.pause();
                         remainingTime = Integer.parseInt(mTextViewGameTimer.getText().toString());
                         countDownTimer.cancel();
-                        Toast.makeText(GameActivity.this, "Correct", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(GameActivity.this, "Correct", Toast.LENGTH_SHORT).show();
                         correct.dialog.show();
                         correct.mImageButtonCorrectOk.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -2323,10 +2458,16 @@ public class GameActivity extends AppCompatActivityHelper {
                         countDownTimer.pause();
                         remainingTime = Integer.parseInt(mTextViewGameTimer.getText().toString());
                         countDownTimer.cancel();
-                        Toast.makeText(GameActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
-                        setUpGameQuestions(questionNumber + 1, points);
-                        correct.dialog.cancel();
+                        wrong.mImageButtonWrongOk.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                wrong.dialog.cancel();
+                                setUpGameQuestions(questionNumber + 1, points);
+                            }
+                        });
+                        wrong.dialog.show();
                     }
+                    mLinearLayoutMultipleChoice.setVisibility(View.GONE);
                     totalRemainingTime += remainingTime;
                 }
             });
@@ -2525,24 +2666,7 @@ public class GameActivity extends AppCompatActivityHelper {
             }
         });
 
-        howToPlay.dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                howToPlay.dialog.cancel();
-                popupMessageTimer.pause();
-                Log.i(TAG, "Line 2532: popupMessageTimer.pause();");
-            }
-        });
 
-        howToPlay.mImageButtonOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                howToPlay.dialog.cancel();
-                popupMessageTimer.pause();
-                Log.i(TAG, "Line 2541: popupMessageTimer.pause();");
-                countDownTimer.start();
-            }
-        });
 
         options.mButtonOptionResume.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -2624,10 +2748,7 @@ public class GameActivity extends AppCompatActivityHelper {
 
         //endregion
 
-        howToPlay.mTextViewInstruction.setText(questionModel.getA_instruction());
-        popupMessageTimer.resume();
-        Log.i(TAG, "Line 2628: popupMessageTimer.resume()");
-        howToPlay.dialog.show();
+
     }
     //endregion
 
@@ -2651,10 +2772,13 @@ public class GameActivity extends AppCompatActivityHelper {
         final Options options = new Options(GameActivity.this);
         final TimesUp timesUp = new TimesUp(GameActivity.this);
         final Correct correct = new Correct(GameActivity.this);
-
+        final Wrong wrong = new Wrong(GameActivity.this);
         mTextViewGameNumberOfQuestion.setText(( (questionNumber + 1) + "/5"));
         mEditTextIdentificationAnswer.setText("");
-        mLinearLayoutIdentification.setVisibility(View.VISIBLE);
+
+        howToPlay.mTextViewInstruction.setText(questionModel.getA_instruction());
+        popupMessageTimer.resume();
+        Log.i(TAG, "Line 2985: popupMessageTimer.resume();");
         countDownTimer = new CountDownTimer((Integer.parseInt(questionModel.getA_timeduration()) * 1000), (1000)) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -2685,7 +2809,27 @@ public class GameActivity extends AppCompatActivityHelper {
                 }
             }
         };
+        howToPlay.dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                howToPlay.dialog.cancel();
+                popupMessageTimer.pause();
+                Log.i(TAG, "Line 2888: popupMessageTimer.pause();");
+            }
+        });
 
+        howToPlay.mImageButtonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                howToPlay.dialog.cancel();
+                popupMessageTimer.pause();
+                mLinearLayoutIdentification.setVisibility(View.VISIBLE);
+                Log.i(TAG, "Line 2897: popupMessageTimer.pause();");
+                countDownTimer.start();
+
+            }
+        });
+        howToPlay.dialog.show();
         mTextViewIdentificationQuestion.setText(questionModel.getA_question());
         if(questionModel.getA_question().toLowerCase().isEmpty()){
             Log.i(TAG, "setUpIdentification: null question" );
@@ -2696,8 +2840,16 @@ public class GameActivity extends AppCompatActivityHelper {
             @Override
             public void onClick(View v) {
                 String answer = mEditTextIdentificationAnswer.getText().toString().toLowerCase();
-
-                if(answer.equals(questionModel.getA_answer().toLowerCase())){
+                List<String> answers = LogicHelper.choiceReBuilder(questionModel.getA_answer());
+                int __point = 0;
+                for(int i = 0; i < answers.size(); i++){
+                    if(answer.contains(answers.get(i).trim().toLowerCase()) && answer.length() >= answers.get(i).length() ){
+                        __point++;
+                         Log.i(TAG, "" + i + ": " + answer + " has " + answers.get(i));
+                    }
+                }
+                Log.i(TAG, "__point: " + __point);
+                if(__point != 0){
                     //region correct answer
                     countDownTimer.pause();
                     countDownTimer.cancel();
@@ -2709,17 +2861,24 @@ public class GameActivity extends AppCompatActivityHelper {
                             setUpGameQuestions(questionNumber + 1, points + 1);
                         }
                     });
-                    Toast.makeText(GameActivity.this, "Correct", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(GameActivity.this, "Correct", Toast.LENGTH_SHORT).show();
                     //endregion
                 }
                 else {
                     countDownTimer.pause();
                     remainingTime = Integer.parseInt(mTextViewGameTimer.getText().toString());
                     countDownTimer.cancel();
-                    Toast.makeText(GameActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
-                    correct.dialog.cancel();
-                    setUpGameQuestions(questionNumber + 1, points);
+                    //Toast.makeText(GameActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
+                    wrong.mImageButtonWrongOk.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            wrong.dialog.cancel();
+                            setUpGameQuestions(questionNumber + 1, points);
+                        }
+                    });
+                    wrong.dialog.show();
                 }
+                mLinearLayoutIdentification.setVisibility(View.GONE);
                 totalRemainingTime += remainingTime;
             }
         });
@@ -2881,24 +3040,7 @@ public class GameActivity extends AppCompatActivityHelper {
             }
         });
 
-        howToPlay.dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                howToPlay.dialog.cancel();
-                popupMessageTimer.pause();
-                Log.i(TAG, "Line 2888: popupMessageTimer.pause();");
-            }
-        });
 
-        howToPlay.mImageButtonOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                howToPlay.dialog.cancel();
-                popupMessageTimer.pause();
-                Log.i(TAG, "Line 2897: popupMessageTimer.pause();");
-                countDownTimer.start();
-            }
-        });
 
         options.mButtonOptionResume.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -2981,10 +3123,6 @@ public class GameActivity extends AppCompatActivityHelper {
         });
 
         //endregion
-        howToPlay.mTextViewInstruction.setText(questionModel.getA_instruction());
-        popupMessageTimer.resume();
-        Log.i(TAG, "Line 2985: popupMessageTimer.resume();");
-        howToPlay.dialog.show();
     }
     //endregion
 }

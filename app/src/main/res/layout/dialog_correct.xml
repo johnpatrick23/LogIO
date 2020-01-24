@@ -70,7 +70,7 @@
                     android:layout_weight="1"
                     android:padding="0dp"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic_okayicon" />
+                    app:srcCompat="@drawable/ic_arrowrighticon" />
             </LinearLayout>
         </LinearLayout>
 

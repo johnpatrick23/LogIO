@@ -88,7 +88,7 @@
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/courierprime_regular"
                     android:gravity="center"
-                    android:text="1. Binary Number System"
+                    android:text="1. Binary Number System\n- It has only two possible values, 1 and 0. \n - For computers-since flip flops store either 0 or 1.\n - Base 2 (0, 1)"
                     android:textAlignment="center"
                     android:textColor="#000000"
                     android:textSize="24sp" />
@@ -101,7 +101,7 @@
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/courierprime_regular"
                     android:gravity="center"
-                    android:text="2. Decimal Number System"
+                    android:text="2. Decimal Number System\n- It is radix or base 10. Decimal Number System has 10 unique digits starting from 0 to 9.\n - Counting using fingers. \n - Base 10 System (0 - 9)"
                     android:textAlignment="center"
                     android:textColor="#000000"
                     android:textSize="24sp" />
@@ -114,7 +114,7 @@
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/courierprime_regular"
                     android:gravity="center"
-                    android:text="3. Octal Number System"
+                    android:text="3. Octal Number System\n - To shorten long binary numbers. \n - Base 8 (0 - 7)"
                     android:textAlignment="center"
                     android:textColor="#000000"
                     android:textSize="24sp" />
@@ -127,7 +127,87 @@
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/courierprime_regular"
                     android:gravity="center"
-                    android:text="4. Hexadecimal Number System"
+                    android:text="4. Hexadecimal Number System\n - Since data is stored in bytes. \n - Base 16 (0 - 9, A - F)"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/textView74"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="On the other hand, Octal and Hexadecimal are the preferred number system to used when directly communicating with the machine."
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_choices"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imageView16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_converting_base_10_to_base_2" />
+
+                    <ImageView
+                        android:id="@+id/imageView18"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_converting_base_10_to_base_2_part_2" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_choices"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imageView19"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_converting_base_2_to_base_8" />
+
+                    <ImageView
+                        android:id="@+id/imageView20"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_converting_base_2_to_base_8_part_2" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_choices"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imageView21"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_converting_base_8_to_base_2" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView29"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/courierprime_regular"
+                    android:gravity="center"
+                    android:text="Hence, complement is used in digital computer for simplifying the subtraction operation and for logical manipulation."
                     android:textAlignment="center"
                     android:textColor="#000000"
                     android:textSize="24sp" />

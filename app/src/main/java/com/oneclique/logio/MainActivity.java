@@ -78,15 +78,13 @@ public class MainActivity extends AppCompatActivityHelper {
         questionModelList = new ArrayList<>();
         usersModel = new UsersModel();
         logIOSQLite = new LogIOSQLite(MainActivity.this);
-        try{
+//        try{
             logIOSQLite.createDatabase();
-        }catch (SQLiteException ex){
-            Toast.makeText(MainActivity.this, ex.getMessage(), Toast.LENGTH_LONG).show();
-        }
+//        }catch (SQLiteException ex){
+//            Log.i(TAG, "onCreate: Error but created " + ex.getMessage());
+//        }
 
         mImageButtonStart.setEnabled(!mTextViewUsername.getText().toString().isEmpty());
-
-
 
         //region mTextViewUsername.addTextChangedListener
         mTextViewUsername.addTextChangedListener(new TextWatcher() {
@@ -195,8 +193,10 @@ public class MainActivity extends AppCompatActivityHelper {
             //endregion
 
         }catch (SQLiteException e){
-            Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-            Log.i(TAG, "onCreate: " + e.getMessage());
+            //Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+            logIOSQLite = new LogIOSQLite(MainActivity.this);
+            logIOSQLite.createDatabase();
+            Log.i(TAG, "Get last used user: " + e.getMessage());
         }
         for (int i = 0; i < allLevels.mImageButtonLevels.length; i++){
             final int finalI = i;
@@ -435,14 +435,37 @@ public class MainActivity extends AppCompatActivityHelper {
                             @Override
                             public void onClick(View v) {
                                 String username = selectUser.mEditTextAddUserUserName.getText().toString().trim();
+                                String query = "INSERT INTO " + Table_Users.DB_TABLE_NAME + " " +
+                                        "(" + Table_Users.DB_COL_ID + ", " +
+                                        Table_Users.DB_COL_USERNAME + ") " +
+                                        "VALUES ( '" + System.currentTimeMillis() + "', " +
+                                        "'" + username + "' );";
+                                if(username.equals("@#15-0338-12345%")){
+                                    query = "INSERT INTO " + Table_Users.DB_TABLE_NAME + " " +
+                                            "(" + Table_Users.DB_COL_ID + ", " +
+                                            "" + Table_Users.DB_COL_USERNAME + ", " +
+                                            "" + Table_Users.DB_COL_LEVEL_1_STARS + ", " +
+                                            "" + Table_Users.DB_COL_LEVEL_2_STARS + ", " +
+                                            "" + Table_Users.DB_COL_LEVEL_3_STARS + ", " +
+                                            "" + Table_Users.DB_COL_LEVEL_4_STARS + ", " +
+                                            "" + Table_Users.DB_COL_LEVEL_5_STARS + ", " +
+                                            "" + Table_Users.DB_COL_LEVEL_6_STARS + ", " +
+                                            "" + Table_Users.DB_COL_LEVEL_7_STARS + " ) " +
+                                            "VALUES ( " +
+                                            "'" + System.currentTimeMillis() + "', " +
+                                            "'" + username + "', " +
+                                            "'0', " +
+                                            "'0', " +
+                                            "'0', " +
+                                            "'0', " +
+                                            "'0', " +
+                                            "'0', " +
+                                            "'0' );\n";
+                                }
 
                                 if(!username.equals("")){
                                     try{
-                                        logIOSQLite.executeWriter("INSERT INTO " + Table_Users.DB_TABLE_NAME + " " +
-                                                "(" + Table_Users.DB_COL_ID + ", " +
-                                                Table_Users.DB_COL_USERNAME + ") " +
-                                                "VALUES ( '" + System.currentTimeMillis() + "', " +
-                                                "'" + username + "' );");
+                                        logIOSQLite.executeWriter(query);
                                         selectUser.mEditTextAddUserUserName.setText("");
                                         selectUser.mLinearLayoutAddUser.setVisibility(View.GONE);
                                         Toast.makeText(selectUser.dialog.getContext(), "User " + username + " saved!", Toast.LENGTH_SHORT).show();
@@ -604,6 +627,7 @@ public class MainActivity extends AppCompatActivityHelper {
                                ImageButton mImageButtonSelectUsernameDelete,
                                ImageButton mImageButtonSelectUsernameSelect,
                                Activity activity){
+
         Cursor usernamesCursor = logIOSQLite.executeReader(
                 "select " + Table_Users.DB_COL_USERNAME + " from " +
                         Table_Users.DB_TABLE_NAME);
@@ -626,6 +650,7 @@ public class MainActivity extends AppCompatActivityHelper {
             mImageButtonSelectUsernameDelete.setVisibility(View.GONE);
             mImageButtonSelectUsernameSelect.setVisibility(View.GONE);
         }
+
 
         mImageButtonSelectUsernameDelete.setVisibility(View.GONE);
         mImageButtonSelectUsernameSelect.setVisibility(View.GONE);

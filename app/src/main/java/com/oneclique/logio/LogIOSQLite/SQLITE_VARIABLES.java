@@ -4,7 +4,7 @@ public class SQLITE_VARIABLES {
 
     final static String DB_NAME = "logio.db";
 
-    public static final int DB_VERSION = 3;
+    public static final int DB_VERSION = 1;
 
     public final static class Table_Users{
         public final static String DB_TABLE_NAME = "tbl_users";

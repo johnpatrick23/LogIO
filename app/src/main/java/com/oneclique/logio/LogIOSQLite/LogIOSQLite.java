@@ -94,7 +94,7 @@ public class LogIOSQLite extends SQLiteOpenHelper {
         }
     }
 
-    private void deleteDatabase() {
+    public void deleteDatabase() {
         File file = new File(DB_PATH);
         Log.i(TAG, file.getName() + ": " + file.delete());
     }

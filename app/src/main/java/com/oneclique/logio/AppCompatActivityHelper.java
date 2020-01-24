@@ -729,4 +729,18 @@ public class AppCompatActivityHelper extends AppCompatActivity implements Reques
         }
     }
 
+    class Wrong {
+        Dialog dialog;
+        ImageButton mImageButtonWrongOk;
+        TextView mTextViewWrongMessage;
+
+        Wrong(Context context){
+            dialog = new Dialog(context);
+            dialog.setContentView(R.layout.dialog_wrong);
+            FullscreenDialog(dialog);
+            mTextViewWrongMessage = dialog.findViewById(R.id.mTextViewWrongMessage);
+            mImageButtonWrongOk = dialog.findViewById(R.id.mImageButtonWrongOk);
+        }
+    }
+
 }

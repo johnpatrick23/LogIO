@@ -68,6 +68,7 @@
                     android:layout_height="48dp"
                     android:layout_weight="1"
                     android:padding="0dp"
+                    android:visibility="gone"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/ic_restarticon" />
 
@@ -79,7 +80,7 @@
                     android:layout_weight="1"
                     android:padding="0dp"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic_okayicon" />
+                    app:srcCompat="@drawable/ic_arrowrighticon" />
             </LinearLayout>
         </LinearLayout>
 
