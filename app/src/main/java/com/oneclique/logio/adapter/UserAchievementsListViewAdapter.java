@@ -50,6 +50,7 @@ public class UserAchievementsListViewAdapter extends BaseAdapter {
         TextView mTextViewUserAchievementsNumberOfTriesText = convertView.findViewById(R.id.mTextViewUserAchievementsNumberOfTriesText);
         TextView mTextViewUserAchievementsNumberOfTries = convertView.findViewById(R.id.mTextViewUserAchievementsNumberOfTries);
         TextView mTextViewUserAchievementsAverageTime = convertView.findViewById(R.id.mTextViewUserAchievementsAverageTime);
+        TextView mTextViewUserAchievementsPoints = convertView.findViewById(R.id.mTextViewUserAchievementsPoints);
 
         ImageView[] mImageViewAchievementsStars = {
                 convertView.findViewById(R.id.mImageViewUserAchievementsStar1),
@@ -79,6 +80,7 @@ public class UserAchievementsListViewAdapter extends BaseAdapter {
                 (Integer.parseInt(achievementsModels.get(position).getA_number_of_tries()) == 1) ? "Try:" : "Tries:");
         mTextViewUserAchievementsNumberOfTries.setText(achievementsModels.get(position).getA_number_of_tries());
         mTextViewUserAchievementsAverageTime.setText(achievementsModels.get(position).getA_time_finished());
+        mTextViewUserAchievementsPoints.setText(achievementsModels.get(position).getA_description());
         return convertView;
     }
 }
