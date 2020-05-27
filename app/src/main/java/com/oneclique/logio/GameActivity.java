@@ -403,8 +403,9 @@ public class GameActivity extends AppCompatActivityHelper {
                                 int numberOfTries = Integer.parseInt(userAchievementsModel.getA_number_of_tries());
                                 logIOSQLite.executeWriter(("UPDATE " + Table_User_Achievements.DB_TABLE_NAME + " " +
                                         "SET " + Table_User_Achievements.DB_COL_STARS + " = '" + stars + "', " +
-                                        "" + Table_User_Achievements.DB_COL_NUMBER_OF_TRIES + " = '" + (numberOfTries + 1) + "'," +
-                                        "" + Table_User_Achievements.DB_COL_TIME_FINISHED + " = '" + (totalRemainingTime / questionModelList.size()) + "' " +
+                                        "" + Table_User_Achievements.DB_COL_NUMBER_OF_TRIES + " = '" + (numberOfTries + 1) + "', " +
+                                        "" + Table_User_Achievements.DB_COL_TIME_FINISHED + " = '" + (totalRemainingTime / questionModelList.size()) + "', " +
+                                        "" + Table_User_Achievements.DB_COL_DESCRIPTION + " = '" + points + "' " +
                                         "WHERE " + Table_User_Achievements.DB_COL_USERNAME + " = '" + playerInGameModel.getUsername() + "' AND " +
                                         "" + Table_User_Achievements.DB_COL_LEVEL + " = '" + (Integer.parseInt(playerInGameModel.getSelectedLevel()) + 1) + "';"));
 
@@ -413,7 +414,8 @@ public class GameActivity extends AppCompatActivityHelper {
                                 Log.i(TAG, ex.getMessage());
                                 Log.i(TAG, "Failed to update user achievements!");
                             }
-                        }else{
+                        }
+                        else{
                             try{
                                 logIOSQLite.executeWriter(("INSERT INTO " + Table_User_Achievements.DB_TABLE_NAME + " " +
                                         "(" + Table_User_Achievements.DB_COL_ID + ", " +
@@ -427,7 +429,7 @@ public class GameActivity extends AppCompatActivityHelper {
                                         "'" + (Integer.parseInt(playerInGameModel.getSelectedLevel()) + 1) + "', " +
                                         "'" + stars + "', " +
                                         "'" + (totalRemainingTime / questionModelList.size()) + "', " +
-                                        "'a_description', " +
+                                        "'" + points + "', " +
                                         "'1', " +
                                         "'" + playerInGameModel.getUsername() + "' );"));
                                 Log.i(TAG, "Successfully added new user achievements!");
@@ -447,7 +449,8 @@ public class GameActivity extends AppCompatActivityHelper {
                     Log.i(TAG, "playerInGameModel.getUsername(): " + playerInGameModel.getUsername());
                     Log.i(TAG, "starsToFill: " + starsToFill);
                     Log.i(TAG, "stars: " + stars);
-                }else {
+                }
+                else {
                     try{
                         Cursor cursor = logIOSQLite.executeReader(("SELECT * FROM " + Table_User_Achievements.DB_TABLE_NAME + " " +
                                 "WHERE " + Table_User_Achievements.DB_COL_USERNAME + " = '" + playerInGameModel.getUsername() + "' AND " +
@@ -470,7 +473,8 @@ public class GameActivity extends AppCompatActivityHelper {
                         int numberOfTries = Integer.parseInt(userAchievementsModel.getA_number_of_tries());
 
                         logIOSQLite.executeWriter(("UPDATE " + Table_User_Achievements.DB_TABLE_NAME + " " +
-                                "SET " + Table_User_Achievements.DB_COL_NUMBER_OF_TRIES + " = '" + (numberOfTries + 1) + "' " +
+                                "SET " + Table_User_Achievements.DB_COL_NUMBER_OF_TRIES + " = '" + (numberOfTries + 1) + "', " +
+                                "" + Table_User_Achievements.DB_COL_DESCRIPTION + " = '" + points + "' " +
                                 "WHERE " + Table_User_Achievements.DB_COL_USERNAME + " = '" + playerInGameModel.getUsername() + "' AND " +
                                 "" + Table_User_Achievements.DB_COL_LEVEL + " = '" + (Integer.parseInt(playerInGameModel.getSelectedLevel()) + 1) + "';"));
                         Log.i(TAG, "Successfully updated user achievements!");
