@@ -165,13 +165,16 @@ public class UserLogsActivity extends AppCompatActivityHelper {
             Log.i(TAG, "dropOutRate: " + dropOutRate);
 
             String dropOutRateString = String.format("%.02f", dropOutRate) + "%";
-
+            float messageDisplayTimeF = (float)messageDisplayTime/60;
+            Log.i(TAG, "messageDisplayTime: " + messageDisplayTimeF);
+            String messageDisplayTimeString = String.format("%.02f", messageDisplayTimeF);
             mTextViewLogsDropoutRate.setText(dropOutRateString);
-            mTextViewLogsMessageDisplayTime.setText(String.valueOf(messageDisplayTime));
+            mTextViewLogsMessageDisplayTime.setText(messageDisplayTimeString);
             mTextViewLogsNumberOfTry.setText(userAchievementsModel.getA_number_of_tries());
             mTextViewLogsBounceRate.setText(usersModel.getA_number_of_access());
             mTextViewLogsReturnVisits.setText(usersModel.getA_number_of_access());
         }catch (Exception e){
+            Log.i(TAG, "e: " + e);
             Toast.makeText(UserLogsActivity.this, "Nothing to display!", Toast.LENGTH_LONG).show();
         }
 

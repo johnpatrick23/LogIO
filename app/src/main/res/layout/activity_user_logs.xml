@@ -75,7 +75,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/courierprime_bold"
                     android:gravity="center_vertical"
-                    android:text="Message display time (seconds):"
+                    android:text="Message display time (minutes):"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"

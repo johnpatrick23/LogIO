@@ -259,7 +259,7 @@ public class GameActivity extends AppCompatActivityHelper {
                 public void onClick(View v) {
                     introduction.dialog.cancel();
                     popupMessageTimer.pause();
-                    Log.i(TAG, "Line 254: popupMessageTimer.pause();");
+                    Log.i(TAG, "Line 262: popupMessageTimer.pause();");
                 }
             });
 
@@ -268,7 +268,7 @@ public class GameActivity extends AppCompatActivityHelper {
                 public void onCancel(DialogInterface dialog) {
                     introduction.dialog.cancel();
                     popupMessageTimer.pause();
-                    Log.i(TAG, "Line 263: popupMessageTimer.pause();");
+                    Log.i(TAG, "Line 271: popupMessageTimer.pause();");
                     setUpGameQuestions(questionNumber, 0);
                 }
             });
@@ -376,74 +376,74 @@ public class GameActivity extends AppCompatActivityHelper {
                 default: break;
             }
             try{
+                try{
+                    Cursor cursor = logIOSQLite.executeReader(("SELECT * FROM " + Table_User_Achievements.DB_TABLE_NAME + " " +
+                            "WHERE " + Table_User_Achievements.DB_COL_USERNAME + " = '" + playerInGameModel.getUsername() + "' AND " +
+                            "" + Table_User_Achievements.DB_COL_LEVEL + " = '" + (Integer.parseInt(playerInGameModel.getSelectedLevel()) + 1) + "';"));
+
+                    UserAchievementsModel userAchievementsModel = new UserAchievementsModel();
+
+                    if(cursor.getCount() != 0){
+                        while(cursor.moveToNext()){
+                            userAchievementsModel.setA_id(cursor.getString(cursor.getColumnIndex(Table_User_Achievements.DB_COL_ID)));
+                            userAchievementsModel.setA_level(cursor.getString(cursor.getColumnIndex(Table_User_Achievements.DB_COL_LEVEL)));
+                            userAchievementsModel.setA_stars(cursor.getString(cursor.getColumnIndex(Table_User_Achievements.DB_COL_STARS)));
+                            userAchievementsModel.setA_time_finished(cursor.getString(cursor.getColumnIndex(Table_User_Achievements.DB_COL_TIME_FINISHED)));
+                            userAchievementsModel.setA_description(cursor.getString(cursor.getColumnIndex(Table_User_Achievements.DB_COL_DESCRIPTION)));
+                            userAchievementsModel.setA_number_of_tries(cursor.getString(cursor.getColumnIndex(Table_User_Achievements.DB_COL_NUMBER_OF_TRIES)));
+                            userAchievementsModel.setA_username(cursor.getString(cursor.getColumnIndex(Table_User_Achievements.DB_COL_USERNAME)));
+                        }
+
+                        try{
+                            int numberOfTries = Integer.parseInt(userAchievementsModel.getA_number_of_tries());
+                            logIOSQLite.executeWriter(("UPDATE " + Table_User_Achievements.DB_TABLE_NAME + " " +
+                                    "SET " + Table_User_Achievements.DB_COL_STARS + " = '" + stars + "', " +
+                                    "" + Table_User_Achievements.DB_COL_NUMBER_OF_TRIES + " = '" + (numberOfTries + 1) + "', " +
+                                    "" + Table_User_Achievements.DB_COL_TIME_FINISHED + " = '" + (totalRemainingTime / questionModelList.size()) + "', " +
+                                    "" + Table_User_Achievements.DB_COL_DESCRIPTION + " = '" + points + "' " +
+                                    "WHERE " + Table_User_Achievements.DB_COL_USERNAME + " = '" + playerInGameModel.getUsername() + "' AND " +
+                                    "" + Table_User_Achievements.DB_COL_LEVEL + " = '" + (Integer.parseInt(playerInGameModel.getSelectedLevel()) + 1) + "';"));
+
+                            Log.i(TAG, "Successfully updated new user achievements!");
+                        }catch (SQLiteException ex){
+                            Log.i(TAG, ex.getMessage());
+                            Log.i(TAG, "Failed to update user achievements!");
+                        }
+                    }
+                    else{
+                        try{
+                            logIOSQLite.executeWriter(("INSERT INTO " + Table_User_Achievements.DB_TABLE_NAME + " " +
+                                    "(" + Table_User_Achievements.DB_COL_ID + ", " +
+                                    "" + Table_User_Achievements.DB_COL_LEVEL + ", " +
+                                    "" + Table_User_Achievements.DB_COL_STARS + ", " +
+                                    "" + Table_User_Achievements.DB_COL_TIME_FINISHED + ", " +
+                                    "" + Table_User_Achievements.DB_COL_DESCRIPTION + ", " +
+                                    "" + Table_User_Achievements.DB_COL_NUMBER_OF_TRIES + ", " +
+                                    "" + Table_User_Achievements.DB_COL_USERNAME + " ) " +
+                                    "VALUES ( '" + System.currentTimeMillis() + "', " +
+                                    "'" + (Integer.parseInt(playerInGameModel.getSelectedLevel()) + 1) + "', " +
+                                    "'" + stars + "', " +
+                                    "'" + (totalRemainingTime / questionModelList.size()) + "', " +
+                                    "'" + points + "', " +
+                                    "'1', " +
+                                    "'" + playerInGameModel.getUsername() + "' );"));
+                            Log.i(TAG, "Successfully added new user achievements!");
+                        }catch (SQLiteException ex){
+                            Log.i(TAG, ex.getMessage());
+                            Log.i(TAG, "Failed to insert user achievements!");
+                        }
+                    }
+
+                    Log.i(TAG, "Successfully get all the list of user achievements table!");
+                }catch (SQLiteException ex){
+                    Log.i(TAG, ex.getMessage());
+                    Log.i(TAG, "Failed to get the list of user achievements table!");
+                }/* originally 32*/
                 if(lastStar <= stars){
                     int i = logIOSQLite.executeWriter("UPDATE " + Table_Users.DB_TABLE_NAME + " " +
                             "SET " + starsToFill + " = '" + stars + "' " +
                             "WHERE " + Table_Users.DB_COL_USERNAME + " = '" + playerInGameModel.getUsername() + "';");
-
-                    try{
-                        Cursor cursor = logIOSQLite.executeReader(("SELECT * FROM " + Table_User_Achievements.DB_TABLE_NAME + " " +
-                                "WHERE " + Table_User_Achievements.DB_COL_USERNAME + " = '" + playerInGameModel.getUsername() + "' AND " +
-                                "" + Table_User_Achievements.DB_COL_LEVEL + " = '" + (Integer.parseInt(playerInGameModel.getSelectedLevel()) + 1) + "';"));
-
-                        UserAchievementsModel userAchievementsModel = new UserAchievementsModel();
-
-                        if(cursor.getCount() != 0){
-                            while(cursor.moveToNext()){
-                                userAchievementsModel.setA_id(cursor.getString(cursor.getColumnIndex(Table_User_Achievements.DB_COL_ID)));
-                                userAchievementsModel.setA_level(cursor.getString(cursor.getColumnIndex(Table_User_Achievements.DB_COL_LEVEL)));
-                                userAchievementsModel.setA_stars(cursor.getString(cursor.getColumnIndex(Table_User_Achievements.DB_COL_STARS)));
-                                userAchievementsModel.setA_time_finished(cursor.getString(cursor.getColumnIndex(Table_User_Achievements.DB_COL_TIME_FINISHED)));
-                                userAchievementsModel.setA_description(cursor.getString(cursor.getColumnIndex(Table_User_Achievements.DB_COL_DESCRIPTION)));
-                                userAchievementsModel.setA_number_of_tries(cursor.getString(cursor.getColumnIndex(Table_User_Achievements.DB_COL_NUMBER_OF_TRIES)));
-                                userAchievementsModel.setA_username(cursor.getString(cursor.getColumnIndex(Table_User_Achievements.DB_COL_USERNAME)));
-                            }
-
-                            try{
-                                int numberOfTries = Integer.parseInt(userAchievementsModel.getA_number_of_tries());
-                                logIOSQLite.executeWriter(("UPDATE " + Table_User_Achievements.DB_TABLE_NAME + " " +
-                                        "SET " + Table_User_Achievements.DB_COL_STARS + " = '" + stars + "', " +
-                                        "" + Table_User_Achievements.DB_COL_NUMBER_OF_TRIES + " = '" + (numberOfTries + 1) + "', " +
-                                        "" + Table_User_Achievements.DB_COL_TIME_FINISHED + " = '" + (totalRemainingTime / questionModelList.size()) + "', " +
-                                        "" + Table_User_Achievements.DB_COL_DESCRIPTION + " = '" + points + "' " +
-                                        "WHERE " + Table_User_Achievements.DB_COL_USERNAME + " = '" + playerInGameModel.getUsername() + "' AND " +
-                                        "" + Table_User_Achievements.DB_COL_LEVEL + " = '" + (Integer.parseInt(playerInGameModel.getSelectedLevel()) + 1) + "';"));
-
-                                Log.i(TAG, "Successfully updated new user achievements!");
-                            }catch (SQLiteException ex){
-                                Log.i(TAG, ex.getMessage());
-                                Log.i(TAG, "Failed to update user achievements!");
-                            }
-                        }
-                        else{
-                            try{
-                                logIOSQLite.executeWriter(("INSERT INTO " + Table_User_Achievements.DB_TABLE_NAME + " " +
-                                        "(" + Table_User_Achievements.DB_COL_ID + ", " +
-                                        "" + Table_User_Achievements.DB_COL_LEVEL + ", " +
-                                        "" + Table_User_Achievements.DB_COL_STARS + ", " +
-                                        "" + Table_User_Achievements.DB_COL_TIME_FINISHED + ", " +
-                                        "" + Table_User_Achievements.DB_COL_DESCRIPTION + ", " +
-                                        "" + Table_User_Achievements.DB_COL_NUMBER_OF_TRIES + ", " +
-                                        "" + Table_User_Achievements.DB_COL_USERNAME + " ) " +
-                                        "VALUES ( '" + System.currentTimeMillis() + "', " +
-                                        "'" + (Integer.parseInt(playerInGameModel.getSelectedLevel()) + 1) + "', " +
-                                        "'" + stars + "', " +
-                                        "'" + (totalRemainingTime / questionModelList.size()) + "', " +
-                                        "'" + points + "', " +
-                                        "'1', " +
-                                        "'" + playerInGameModel.getUsername() + "' );"));
-                                Log.i(TAG, "Successfully added new user achievements!");
-                            }catch (SQLiteException ex){
-                                Log.i(TAG, ex.getMessage());
-                                Log.i(TAG, "Failed to insert user achievements!");
-                            }
-                        }
-
-                        Log.i(TAG, "Successfully get all the list of user achievements table!");
-                    }catch (SQLiteException ex){
-                        Log.i(TAG, ex.getMessage());
-                        Log.i(TAG, "Failed to get the list of user achievements table!");
-                    }
+                    // originally here 32
 
                     Log.i(TAG, "logIOSQLite.executeWriter: " + i);
                     Log.i(TAG, "playerInGameModel.getUsername(): " + playerInGameModel.getUsername());
@@ -629,7 +629,7 @@ public class GameActivity extends AppCompatActivityHelper {
                                     "" + Table_User_Logs.DB_COL_POPUP_MESSAGE_TIME + ", " +
                                     "" + Table_User_Logs.DB_COL_STAR + ", " +
                                     "" + Table_User_Logs.DB_COL_AVERAGE_TIME + ") " +
-                                    "VALUES " +
+                                "VALUES " +
                                     "('" + System.currentTimeMillis() + "', " +
                                     "'" + playerInGameModel.getUsername() + "', " +
                                     "'" + (playerInGameModel.getSelectedLevel() + 1) + "', " +
@@ -788,7 +788,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onCancel(DialogInterface dialog) {
                 howToPlay.dialog.cancel();
                 popupMessageTimer.pause();
-                Log.i(TAG, "Line 1133: popupMessageTimer.pause();");
+                Log.i(TAG, "Line 791: popupMessageTimer.pause();");
             }
         });
 
@@ -800,7 +800,7 @@ public class GameActivity extends AppCompatActivityHelper {
                 howToPlay.dialog.cancel();
                 popupMessageTimer.pause();
                 mLinearLayoutDragAndDrop.setVisibility(View.VISIBLE);
-                Log.i(TAG, "Line 1149: popupMessageTimer.pause();");
+                Log.i(TAG, "Line 803: popupMessageTimer.pause();");
                 countDownTimer.start();
             }
         });
@@ -1243,7 +1243,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onCancel(DialogInterface dialog) {
                 paused.dialog.cancel();
                 popupMessageTimer.pause();
-                Log.i(TAG, "Line 1124: popupMessageTimer.pause();");
+                Log.i(TAG, "Line 1246: popupMessageTimer.pause();");
             }
         });
         paused.mButtonPausedRestart.setOnClickListener(new View.OnClickListener() {
@@ -1287,7 +1287,7 @@ public class GameActivity extends AppCompatActivityHelper {
                 countDownTimer.pause();
                 mLinearLayoutDragAndDrop.setVisibility(View.GONE);
                 popupMessageTimer.resume();
-                Log.i(TAG, "Line 1186: popupMessageTimer.resume()");
+                Log.i(TAG, "Line 1290: popupMessageTimer.resume()");
                 paused.dialog.show();
             }
         });
@@ -1298,20 +1298,20 @@ public class GameActivity extends AppCompatActivityHelper {
                 countDownTimer.pause();
                 mLinearLayoutDragAndDrop.setVisibility(View.GONE);
                 popupMessageTimer.resume();
-                Log.i(TAG, "Line 1197: popupMessageTimer.resume();");
+                Log.i(TAG, "Line 1301: popupMessageTimer.resume();");
                 howToPlay.mTextViewInstruction.setText(questionModel.getA_instruction());
                 howToPlay.mImageButtonOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         countDownTimer.resume();
                         popupMessageTimer.pause();
-                        Log.i(TAG, "Line 1205: popupMessageTimer.pause();");
+                        Log.i(TAG, "Line 1308: popupMessageTimer.pause();");
                         mLinearLayoutDragAndDrop.setVisibility(View.VISIBLE);
                         howToPlay.dialog.cancel();
                     }
                 });
                 popupMessageTimer.resume();
-                Log.i(TAG, "Line 1210: popupMessageTimer.resume()");
+                Log.i(TAG, "Line 1314: popupMessageTimer.resume()");
                 howToPlay.dialog.show();
             }
         });
@@ -1335,7 +1335,7 @@ public class GameActivity extends AppCompatActivityHelper {
         });
 
         //endregion
-        Log.i(TAG, "Line 1237: popupMessageTimer.resume()");
+        Log.i(TAG, "Line 1338: popupMessageTimer.resume()");
         //mImageButtonGameHelp.callOnClick();
 
     }
@@ -1422,7 +1422,7 @@ public class GameActivity extends AppCompatActivityHelper {
 
         howToPlay.mTextViewInstruction.setText(questionModel.getA_instruction());
         popupMessageTimer.resume();
-        Log.i(TAG, "Line 1782: popupMessageTimer.resume()");
+        Log.i(TAG, "Line 1425: popupMessageTimer.resume()");
 
         countDownTimer = new CountDownTimer((Integer.parseInt(questionModel.getA_timeduration()) * 1000), (1000)) {
             @Override
@@ -1459,7 +1459,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onCancel(DialogInterface dialog) {
                 howToPlay.dialog.cancel();
                 popupMessageTimer.pause();
-                Log.i(TAG, "Line 1687: popupMessageTimer.pause();");
+                Log.i(TAG, "Line 1462: popupMessageTimer.pause();");
             }
         });
 
@@ -1469,7 +1469,7 @@ public class GameActivity extends AppCompatActivityHelper {
                 howToPlay.dialog.cancel();
                 popupMessageTimer.pause();
                 mLinearLayoutTruthTable.setVisibility(View.VISIBLE);
-                Log.i(TAG, "Line 1696: popupMessageTimer.pause();");
+                Log.i(TAG, "Line 1472: popupMessageTimer.pause();");
                 countDownTimer.start();
             }
         });
@@ -1800,7 +1800,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onCancel(DialogInterface dialog) {
                 paused.dialog.cancel();
                 popupMessageTimer.pause();
-                Log.i(TAG, "Line 1678: popupMessageTimer.pause();");
+                Log.i(TAG, "Line 1803: popupMessageTimer.pause();");
             }
         });
 
@@ -1839,7 +1839,7 @@ public class GameActivity extends AppCompatActivityHelper {
                 countDownTimer.pause();
                 mLinearLayoutTruthTable.setVisibility(View.GONE);
                 popupMessageTimer.resume();
-                Log.i(TAG, "Line 1734: popupMessageTimer.resume()");
+                Log.i(TAG, "Line 1842: popupMessageTimer.resume()");
                 paused.dialog.show();
             }
         });
@@ -1855,13 +1855,13 @@ public class GameActivity extends AppCompatActivityHelper {
                     public void onClick(View v) {
                         countDownTimer.resume();
                         popupMessageTimer.pause();
-                        Log.i(TAG, "Line 1750: popupMessageTimer.pause();");
+                        Log.i(TAG, "Line 1858: popupMessageTimer.pause();");
                         mLinearLayoutTruthTable.setVisibility(View.VISIBLE);
                         howToPlay.dialog.cancel();
                     }
                 });
                 popupMessageTimer.resume();
-                Log.i(TAG, "Line 1756: popupMessageTimer.resume()");
+                Log.i(TAG, "Line 1864: popupMessageTimer.resume()");
                 howToPlay.dialog.show();
             }
         });
@@ -1915,7 +1915,7 @@ public class GameActivity extends AppCompatActivityHelper {
 
         howToPlay.mTextViewInstruction.setText(questionModel.getA_instruction());
         popupMessageTimer.resume();
-        Log.i(TAG, "Line 2200: popupMessageTimer.resume()");
+        Log.i(TAG, "Line 1918: popupMessageTimer.resume()");
 
         countDownTimer = new CountDownTimer((Integer.parseInt(questionModel.getA_timeduration()) * 1000), (1000)) {
             @Override
@@ -1952,7 +1952,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onCancel(DialogInterface dialog) {
                 howToPlay.dialog.cancel();
                 popupMessageTimer.pause();
-                Log.i(TAG, "Line 2105: popupMessageTimer.pause();");
+                Log.i(TAG, "Line 1955: popupMessageTimer.pause();");
             }
         });
 
@@ -1962,7 +1962,7 @@ public class GameActivity extends AppCompatActivityHelper {
                 howToPlay.dialog.cancel();
                 popupMessageTimer.pause();
                 mLinearLayoutDiagram.setVisibility(View.VISIBLE);
-                Log.i(TAG, "Line 2114: popupMessageTimer.pause();");
+                Log.i(TAG, "Line 1965: popupMessageTimer.pause();");
                 countDownTimer.start();
             }
         });
@@ -2233,7 +2233,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onCancel(DialogInterface dialog) {
                 paused.dialog.cancel();
                 popupMessageTimer.pause();
-                Log.i(TAG, "Line 2096: popupMessageTimer.pause();");
+                Log.i(TAG, "Line 2236: popupMessageTimer.pause();");
             }
         });
 
@@ -2270,7 +2270,7 @@ public class GameActivity extends AppCompatActivityHelper {
                 countDownTimer.pause();
                 mLinearLayoutDiagram.setVisibility(View.GONE);
                 popupMessageTimer.resume();
-                Log.i(TAG, "Line 2152: popupMessageTimer.resume()");
+                Log.i(TAG, "Line 2273: popupMessageTimer.resume()");
                 paused.dialog.show();
             }
         });
@@ -2286,13 +2286,13 @@ public class GameActivity extends AppCompatActivityHelper {
                     public void onClick(View v) {
                         countDownTimer.resume();
                         popupMessageTimer.pause();
-                        Log.i(TAG, "Line 2168: popupMessageTimer.pause();");
+                        Log.i(TAG, "Line 2289: popupMessageTimer.pause();");
                         mLinearLayoutDiagram.setVisibility(View.VISIBLE);
                         howToPlay.dialog.cancel();
                     }
                 });
                 popupMessageTimer.resume();
-                Log.i(TAG, "Line 2174: popupMessageTimer.resume()");
+                Log.i(TAG, "Line 2295: popupMessageTimer.resume()");
                 howToPlay.dialog.show();
             }
         });
@@ -2345,7 +2345,7 @@ public class GameActivity extends AppCompatActivityHelper {
         //mLinearLayoutMultipleChoice.setVisibility(View.VISIBLE);
         howToPlay.mTextViewInstruction.setText(questionModel.getA_instruction());
         popupMessageTimer.resume();
-        Log.i(TAG, "Line 2628: popupMessageTimer.resume()");
+        Log.i(TAG, "Line 2348: popupMessageTimer.resume()");
         final Wrong wrong = new Wrong(GameActivity.this);
         countDownTimer = new CountDownTimer((Integer.parseInt(questionModel.getA_timeduration()) * 1000), (1000)) {
             @Override
@@ -2383,7 +2383,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onCancel(DialogInterface dialog) {
                 howToPlay.dialog.cancel();
                 popupMessageTimer.pause();
-                Log.i(TAG, "Line 2532: popupMessageTimer.pause();");
+                Log.i(TAG, "Line 2386: popupMessageTimer.pause();");
             }
         });
 
@@ -2393,7 +2393,7 @@ public class GameActivity extends AppCompatActivityHelper {
                 howToPlay.dialog.cancel();
                 popupMessageTimer.pause();
                 mLinearLayoutMultipleChoice.setVisibility(View.VISIBLE);
-                Log.i(TAG, "Line 2541: popupMessageTimer.pause();");
+                Log.i(TAG, "Line 2396: popupMessageTimer.pause();");
                 countDownTimer.start();
             }
         });
@@ -2666,7 +2666,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onCancel(DialogInterface dialog) {
                 paused.dialog.cancel();
                 popupMessageTimer.pause();
-                Log.i(TAG, "Line 2523: popupMessageTimer.pause();");
+                Log.i(TAG, "Line 2669: popupMessageTimer.pause();");
             }
         });
 
@@ -2705,7 +2705,7 @@ public class GameActivity extends AppCompatActivityHelper {
                 countDownTimer.pause();
                 mLinearLayoutMultipleChoice.setVisibility(View.GONE);
                 popupMessageTimer.resume();
-                Log.i(TAG, "Line 2579: popupMessageTimer.resume()");
+                Log.i(TAG, "Line 2708: popupMessageTimer.resume()");
                 paused.dialog.show();
             }
         });
@@ -2721,13 +2721,13 @@ public class GameActivity extends AppCompatActivityHelper {
                     public void onClick(View v) {
                         countDownTimer.resume();
                         popupMessageTimer.pause();
-                        Log.i(TAG, "Line 2897: popupMessageTimer.pause();");
+                        Log.i(TAG, "Line 2724: popupMessageTimer.pause();");
                         mLinearLayoutMultipleChoice.setVisibility(View.VISIBLE);
                         howToPlay.dialog.cancel();
                     }
                 });
                 popupMessageTimer.resume();
-                Log.i(TAG, "Line 2601: popupMessageTimer.resume()");
+                Log.i(TAG, "Line 2730: popupMessageTimer.resume()");
                 howToPlay.dialog.show();
             }
         });
@@ -2782,7 +2782,7 @@ public class GameActivity extends AppCompatActivityHelper {
 
         howToPlay.mTextViewInstruction.setText(questionModel.getA_instruction());
         popupMessageTimer.resume();
-        Log.i(TAG, "Line 2985: popupMessageTimer.resume();");
+        Log.i(TAG, "setUpIdentification 1: popupMessageTimer.resume();");
         countDownTimer = new CountDownTimer((Integer.parseInt(questionModel.getA_timeduration()) * 1000), (1000)) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -2818,7 +2818,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onCancel(DialogInterface dialog) {
                 howToPlay.dialog.cancel();
                 popupMessageTimer.pause();
-                Log.i(TAG, "Line 2888: popupMessageTimer.pause();");
+                Log.i(TAG, "setUpIdentification 2: popupMessageTimer.pause();");
             }
         });
 
@@ -2828,7 +2828,7 @@ public class GameActivity extends AppCompatActivityHelper {
                 howToPlay.dialog.cancel();
                 popupMessageTimer.pause();
                 mLinearLayoutIdentification.setVisibility(View.VISIBLE);
-                Log.i(TAG, "Line 2897: popupMessageTimer.pause();");
+                Log.i(TAG, "setUpIdentification 3: popupMessageTimer.pause();");
                 countDownTimer.start();
 
             }
@@ -3040,7 +3040,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onCancel(DialogInterface dialog) {
                 paused.dialog.cancel();
                 popupMessageTimer.pause();
-                Log.i(TAG, "Line 2879: popupMessageTimer.pause();");
+                Log.i(TAG, "setUpIdentification 4: popupMessageTimer.pause();");
             }
         });
 
@@ -3079,7 +3079,7 @@ public class GameActivity extends AppCompatActivityHelper {
                 countDownTimer.pause();
                 mLinearLayoutIdentification.setVisibility(View.GONE);
                 popupMessageTimer.resume();
-                Log.i(TAG, "Line 2935: popupMessageTimer.resume()");
+                Log.i(TAG, "setUpIdentification 5: popupMessageTimer.resume()");
                 paused.dialog.show();
             }
         });
@@ -3090,20 +3090,20 @@ public class GameActivity extends AppCompatActivityHelper {
                 countDownTimer.pause();
                 mLinearLayoutIdentification.setVisibility(View.GONE);
                 popupMessageTimer.resume();
-                Log.i(TAG, "Line 2946: popupMessageTimer.pause();");
+                Log.i(TAG, "setUpIdentification 6: popupMessageTimer.pause();");
                 howToPlay.mTextViewInstruction.setText(questionModel.getA_instruction());
                 howToPlay.mImageButtonOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         countDownTimer.resume();
                         popupMessageTimer.pause();
-                        Log.i(TAG, "Line 2953: popupMessageTimer.pause();");
+                        Log.i(TAG, "setUpIdentification 7: popupMessageTimer.pause();");
                         mLinearLayoutIdentification.setVisibility(View.VISIBLE);
                         howToPlay.dialog.cancel();
                     }
                 });
                 popupMessageTimer.resume();
-                Log.i(TAG, "Line 2959: popupMessageTimer.resume()");
+                Log.i(TAG, "setUpIdentification 8: popupMessageTimer.resume()");
                 howToPlay.dialog.show();
             }
         });
