@@ -27,6 +27,8 @@ import android.widget.Toast;
 import com.oneclique.logio.LogIOSQLite.LogIOSQLite;
 import com.oneclique.logio.LogIOSQLite.LogIOSQLiteModel.QuestionModel;
 import com.oneclique.logio.LogIOSQLite.LogIOSQLiteModel.UserAchievementsModel;
+import com.oneclique.logio.LogIOSQLite.LogIOSQLiteModel.UserLogsModel;
+import com.oneclique.logio.LogIOSQLite.LogIOSQLiteModel.UsersModel;
 import com.oneclique.logio.LogIOSQLite.SQLITE_VARIABLES.*;
 import com.oneclique.logio.helper.CountDownTimer;
 import com.oneclique.logio.helper.LogicHelper;
@@ -46,6 +48,8 @@ public class GameActivity extends AppCompatActivityHelper {
     private ImageButton mImageButtonGameOption;
 
     private CountDownTimer popupMessageTimer;
+    private CountDownTimer inGameTimer;
+    private int inGameTime = 0;
     private int popupMessageTime = 0;
 
     private int selectedLevel;
@@ -94,6 +98,34 @@ public class GameActivity extends AppCompatActivityHelper {
     private GameItems gameItems;
 
     private int totalRemainingTime = 0;
+
+    public void SaveTotalTimeSpent(){
+        inGameTimer.cancel();
+        Log.i(TAG, "onBackPressed: inGameTime: " + inGameTime);
+
+        Cursor totalTimeSpentCursor = logIOSQLite.executeReader("SELECT " + Table_Users.DB_COL_TOTAL_TIME_SPENT + " " +
+                "FROM " + Table_Users.DB_TABLE_NAME + " " +
+                "WHERE " + Table_Users.DB_COL_USERNAME + " = '" + playerInGameModel.getUsername() + "';");
+        UsersModel usersModel = new UsersModel();
+        Log.i(TAG, "onBackPressed: totalTimeSpentCursor.getCount() = " + totalTimeSpentCursor.getCount());
+        if(totalTimeSpentCursor.getCount() != 0){
+            while(totalTimeSpentCursor.moveToNext()){
+                usersModel.setA_total_time_spent(totalTimeSpentCursor.getString(totalTimeSpentCursor.getColumnIndex(Table_Users.DB_COL_TOTAL_TIME_SPENT)));
+            }
+            logIOSQLite.executeWriter("UPDATE " + Table_Users.DB_TABLE_NAME + " " +
+                    "SET " + Table_Users.DB_COL_TOTAL_TIME_SPENT + " = '" + (Integer.parseInt(usersModel.getA_total_time_spent()) + inGameTime) + "' " +
+                    "WHERE " + Table_Users.DB_COL_USERNAME + " = '" + playerInGameModel.getUsername() + "';");
+            Log.i(TAG, "onBackPressed: Total Time spent saved.");
+
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        SaveTotalTimeSpent();
+        super.onBackPressed();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +176,19 @@ public class GameActivity extends AppCompatActivityHelper {
             }
         };
 
+        inGameTimer = new CountDownTimer(Integer.MAX_VALUE, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                inGameTime++;
+                Log.i(TAG, "inGameTime onTick: " + inGameTime);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        };
+        inGameTimer.start();
         popupMessageTimer = new CountDownTimer(Integer.MAX_VALUE, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -253,7 +298,6 @@ public class GameActivity extends AppCompatActivityHelper {
             questionModelList = tmpQuestionModelList;
             mTextViewGameNumberOfQuestion.setText(( (questionNumber + 1) + "/5"));
             final Introduction introduction = new Introduction(GameActivity.this, selectedLevel);
-
             introduction.mImageButtonOk.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -283,6 +327,7 @@ public class GameActivity extends AppCompatActivityHelper {
                 Intent intent1 = new Intent();
                 intent1.putExtra(PLAYER_IN_GAME_MODEL, playerInGameModel);
                 setResult(Activity.RESULT_OK, intent1);
+                SaveTotalTimeSpent();
                 finish();
             }
         });
@@ -395,6 +440,27 @@ public class GameActivity extends AppCompatActivityHelper {
                         }
 
                         try{
+
+                           /* Cursor numberOfTriesCursor = logIOSQLite.executeReader("SELECT * FROM " + Table_User_Logs.DB_TABLE_NAME + " " +
+                                    "WHERE " + Table_User_Logs.DB_COL_USERNAME + " = '" + userAchievementsModel.getA_username() + "' AND " +
+                                    Table_User_Logs.DB_COL_ID + " = '" + userAchievementsModel.getA_id() + "';");
+
+                            UserLogsModel userLogsModel = new UserLogsModel();
+
+                            if(numberOfTriesCursor.getColumnCount() != 0){
+                                while(numberOfTriesCursor.moveToNext()){
+                                    userLogsModel.setA_id(numberOfTriesCursor.getString(numberOfTriesCursor.getColumnIndex(Table_User_Logs.DB_COL_ID)));
+                                    userLogsModel.setA_username(numberOfTriesCursor.getString(numberOfTriesCursor.getColumnIndex(Table_User_Logs.DB_COL_USERNAME)));
+                                    userLogsModel.setA_level(numberOfTriesCursor.getString(numberOfTriesCursor.getColumnIndex(Table_User_Logs.DB_COL_LEVEL)));
+                                    userLogsModel.setA_popup_message_time(numberOfTriesCursor.getString(numberOfTriesCursor.getColumnIndex(Table_User_Logs.DB_COL_POPUP_MESSAGE_TIME)));
+                                    userLogsModel.setA_star(numberOfTriesCursor.getString(numberOfTriesCursor.getColumnIndex(Table_User_Logs.DB_COL_STAR)));
+                                    userLogsModel.setA_average_time(numberOfTriesCursor.getString(numberOfTriesCursor.getColumnIndex(Table_User_Logs.DB_COL_AVERAGE_TIME)));
+                                    userLogsModel.setA_number_of_tries(numberOfTriesCursor.getString(numberOfTriesCursor.getColumnIndex(Table_User_Logs.DB_COL_NUMBER_OF_TRIES)));
+                                }
+                            }*/
+
+                            //int numberOfTries = Integer.parseInt(userLogsModel.getA_number_of_tries());
+
                             int numberOfTries = Integer.parseInt(userAchievementsModel.getA_number_of_tries());
                             logIOSQLite.executeWriter(("UPDATE " + Table_User_Achievements.DB_TABLE_NAME + " " +
                                     "SET " + Table_User_Achievements.DB_COL_STARS + " = '" + stars + "', " +
@@ -403,6 +469,10 @@ public class GameActivity extends AppCompatActivityHelper {
                                     "" + Table_User_Achievements.DB_COL_DESCRIPTION + " = '" + points + "' " +
                                     "WHERE " + Table_User_Achievements.DB_COL_USERNAME + " = '" + playerInGameModel.getUsername() + "' AND " +
                                     "" + Table_User_Achievements.DB_COL_LEVEL + " = '" + (Integer.parseInt(playerInGameModel.getSelectedLevel()) + 1) + "';"));
+
+                            logIOSQLite.executeWriter("UPDATE " + Table_User_Logs.DB_TABLE_NAME + " " +
+                                    "SET " + Table_User_Logs.DB_COL_NUMBER_OF_TRIES + " = '" + (numberOfTries + 1) + "' " +
+                                    "WHERE " + Table_User_Logs.DB_COL_ID + " = '" + playerInGameModel.getUsername() + "'" + ";");
 
                             Log.i(TAG, "Successfully updated new user achievements!");
                         }catch (SQLiteException ex){
@@ -433,12 +503,12 @@ public class GameActivity extends AppCompatActivityHelper {
                             Log.i(TAG, "Failed to insert user achievements!");
                         }
                     }
-
                     Log.i(TAG, "Successfully get all the list of user achievements table!");
                 }catch (SQLiteException ex){
                     Log.i(TAG, ex.getMessage());
                     Log.i(TAG, "Failed to get the list of user achievements table!");
                 }/* originally 32*/
+
                 if(lastStar <= stars){
                     int i = logIOSQLite.executeWriter("UPDATE " + Table_Users.DB_TABLE_NAME + " " +
                             "SET " + starsToFill + " = '" + stars + "' " +
@@ -470,6 +540,26 @@ public class GameActivity extends AppCompatActivityHelper {
                             }
                         }
 
+                        /*Cursor numberOfTriesCursor = logIOSQLite.executeReader("SELECT * FROM " + Table_User_Logs.DB_TABLE_NAME + " " +
+                                "WHERE " + Table_User_Logs.DB_COL_USERNAME + " = '" + userAchievementsModel.getA_username() + "' AND " +
+                                Table_User_Logs.DB_COL_ID + " = '" + userAchievementsModel.getA_id() + "';");
+
+                        UserLogsModel userLogsModel = new UserLogsModel();
+                        Log.i(TAG, "setUpGameQuestions-> numberOfTriesCursor.getColumnCount(): " + numberOfTriesCursor.getColumnCount());
+                        if(numberOfTriesCursor.getColumnCount() != 0){
+                            while(numberOfTriesCursor.moveToNext()){
+                                userLogsModel.setA_id(numberOfTriesCursor.getString(numberOfTriesCursor.getColumnIndex(Table_User_Logs.DB_COL_ID)));
+                                userLogsModel.setA_username(numberOfTriesCursor.getString(numberOfTriesCursor.getColumnIndex(Table_User_Logs.DB_COL_USERNAME)));
+                                userLogsModel.setA_level(numberOfTriesCursor.getString(numberOfTriesCursor.getColumnIndex(Table_User_Logs.DB_COL_LEVEL)));
+                                userLogsModel.setA_popup_message_time(numberOfTriesCursor.getString(numberOfTriesCursor.getColumnIndex(Table_User_Logs.DB_COL_POPUP_MESSAGE_TIME)));
+                                userLogsModel.setA_star(numberOfTriesCursor.getString(numberOfTriesCursor.getColumnIndex(Table_User_Logs.DB_COL_STAR)));
+                                userLogsModel.setA_average_time(numberOfTriesCursor.getString(numberOfTriesCursor.getColumnIndex(Table_User_Logs.DB_COL_AVERAGE_TIME)));
+                                userLogsModel.setA_number_of_tries(numberOfTriesCursor.getString(numberOfTriesCursor.getColumnIndex(Table_User_Logs.DB_COL_NUMBER_OF_TRIES)));
+                            }
+                        }
+                        Log.i(TAG, "setUpGameQuestions -> userLogsModel.getA_number_of_tries(): " + userLogsModel.getA_number_of_tries());
+                        int numberOfTries = Integer.parseInt(String.valueOf(userLogsModel.getA_number_of_tries() == null ? 0 : Integer.parseInt(userLogsModel.getA_number_of_tries())));*/
+
                         int numberOfTries = Integer.parseInt(userAchievementsModel.getA_number_of_tries());
 
                         logIOSQLite.executeWriter(("UPDATE " + Table_User_Achievements.DB_TABLE_NAME + " " +
@@ -477,6 +567,11 @@ public class GameActivity extends AppCompatActivityHelper {
                                 "" + Table_User_Achievements.DB_COL_DESCRIPTION + " = '" + points + "' " +
                                 "WHERE " + Table_User_Achievements.DB_COL_USERNAME + " = '" + playerInGameModel.getUsername() + "' AND " +
                                 "" + Table_User_Achievements.DB_COL_LEVEL + " = '" + (Integer.parseInt(playerInGameModel.getSelectedLevel()) + 1) + "';"));
+
+                        logIOSQLite.executeWriter("UPDATE " + Table_User_Logs.DB_TABLE_NAME + " " +
+                                "SET " + Table_User_Logs.DB_COL_NUMBER_OF_TRIES + " = '" + (numberOfTries + 1) + "' " +
+                                "WHERE " + Table_User_Logs.DB_COL_ID + " = '" + playerInGameModel.getUsername() + "'" + ";");
+
                         Log.i(TAG, "Successfully updated user achievements!");
                     }catch (SQLiteException ex){
                         Log.i(TAG, ex.getMessage());
@@ -566,6 +661,7 @@ public class GameActivity extends AppCompatActivityHelper {
                                     Log.i(TAG, "SQLiteException: " + e.getMessage());
                                 }
                                 setResult(Activity.RESULT_OK, intent1);
+                                SaveTotalTimeSpent();
                                 finish();
                             }
                         });
@@ -590,6 +686,7 @@ public class GameActivity extends AppCompatActivityHelper {
                                 Intent intent1 = new Intent();
                                 intent1.putExtra(PLAYER_IN_GAME_MODEL, playerInGameModel);
                                 setResult(Activity.RESULT_OK, intent1);
+                                SaveTotalTimeSpent();
                                 finish();
                             }
                         });
@@ -603,6 +700,7 @@ public class GameActivity extends AppCompatActivityHelper {
                             Intent intent1 = new Intent();
                             intent1.putExtra(PLAYER_IN_GAME_MODEL, playerInGameModel);
                             setResult(Activity.RESULT_OK, intent1);
+                            SaveTotalTimeSpent();
                             finish();
                         }
                     });
@@ -640,6 +738,7 @@ public class GameActivity extends AppCompatActivityHelper {
                 }catch (SQLiteException ex){
                     Log.i(TAG, "onCancel: " + ex.getMessage());
                 }
+
                 levelComplete.dialog.show();
 
             }catch (SQLiteException e){
@@ -1277,6 +1376,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onClick(View v) {
                 countDownTimer.cancel();
                 popupMessageTimer.cancel();
+                SaveTotalTimeSpent();
                 finish();
             }
         });
@@ -1330,6 +1430,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onClick(View v) {
                 countDownTimer.cancel();
                 popupMessageTimer.cancel();
+                SaveTotalTimeSpent();
                 finish();
             }
         });
@@ -1829,6 +1930,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onClick(View v) {
                 countDownTimer.cancel();
                 popupMessageTimer.cancel();
+                SaveTotalTimeSpent();
                 finish();
             }
         });
@@ -1880,6 +1982,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onClick(View v) {
                 countDownTimer.cancel();
                 popupMessageTimer.cancel();
+                SaveTotalTimeSpent();
                 finish();
             }
         });
@@ -2260,6 +2363,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onClick(View v) {
                 countDownTimer.cancel();
                 popupMessageTimer.cancel();
+                SaveTotalTimeSpent();
                 finish();
             }
         });
@@ -2311,6 +2415,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onClick(View v) {
                 countDownTimer.cancel();
                 popupMessageTimer.cancel();
+                SaveTotalTimeSpent();
                 finish();
             }
         });
@@ -2695,6 +2800,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onClick(View v) {
                 countDownTimer.cancel();
                 popupMessageTimer.cancel();
+                SaveTotalTimeSpent();
                 finish();
             }
         });
@@ -2705,7 +2811,7 @@ public class GameActivity extends AppCompatActivityHelper {
                 countDownTimer.pause();
                 mLinearLayoutMultipleChoice.setVisibility(View.GONE);
                 popupMessageTimer.resume();
-                Log.i(TAG, "Line 2708: popupMessageTimer.resume()");
+                Log.i(TAG, "Line 2759: popupMessageTimer.resume()");
                 paused.dialog.show();
             }
         });
@@ -2746,6 +2852,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onClick(View v) {
                 countDownTimer.cancel();
                 popupMessageTimer.cancel();
+                SaveTotalTimeSpent();
                 finish();
             }
         });
@@ -3069,6 +3176,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onClick(View v) {
                 countDownTimer.cancel();
                 popupMessageTimer.cancel();
+                SaveTotalTimeSpent();
                 finish();
             }
         });
@@ -3122,6 +3230,7 @@ public class GameActivity extends AppCompatActivityHelper {
             public void onClick(View v) {
                 countDownTimer.cancel();
                 popupMessageTimer.cancel();
+                SaveTotalTimeSpent();
                 finish();
             }
         });

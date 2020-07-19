@@ -217,6 +217,7 @@ public class AppCompatActivityHelper extends AppCompatActivity implements Reques
         String getA_popup_message_time = userLogsModel.getA_popup_message_time() == null  ? "null" : userLogsModel.getA_popup_message_time();
         String getA_star = userLogsModel.getA_star() == null  ? "null" : userLogsModel.getA_star();
         String getA_username = userLogsModel.getA_username() == null  ? "null" : userLogsModel.getA_username();
+        String getA_number_of_tries = userLogsModel.getA_number_of_tries() == null  ? "null" : userLogsModel.getA_number_of_tries();
 
         Log.i(TAG, "getA_id: " + getA_id);
         Log.i(TAG, "getA_average_time: " + getA_average_time);
@@ -224,6 +225,7 @@ public class AppCompatActivityHelper extends AppCompatActivity implements Reques
         Log.i(TAG, "getA_popup_message_time: " + getA_popup_message_time);
         Log.i(TAG, "getA_star: " + getA_star);
         Log.i(TAG, "getA_username: " + getA_username);
+        Log.i(TAG, "getA_number_of_tries: " + getA_number_of_tries);
     }
 
     public void UsersModelLog(UsersModel usersModel){
@@ -241,6 +243,7 @@ public class AppCompatActivityHelper extends AppCompatActivity implements Reques
         String getA_hint = usersModel.getA_hint() == null ? "null" : usersModel.getA_hint();
         String getA_add_time = usersModel.getA_add_time() == null ? "null" : usersModel.getA_add_time();
         String getA_slow_time = usersModel.getA_slow_time() == null ? "null" : usersModel.getA_slow_time();
+        String getA_total_time_spent = usersModel.getA_slow_time() == null ? "null" : usersModel.getA_total_time_spent();
 
         Log.i(TAG, "getA_id: " + getA_id);
         Log.i(TAG, "getA_username: " + getA_username);
@@ -256,6 +259,7 @@ public class AppCompatActivityHelper extends AppCompatActivity implements Reques
         Log.i(TAG, "getA_hint: " + getA_hint);
         Log.i(TAG, "getA_add_time: " + getA_add_time);
         Log.i(TAG, "getA_slow_time: " + getA_slow_time);
+        Log.i(TAG, "getA_total_time_spent: " + getA_total_time_spent);
     }
 
     public void QuestionModelLog(QuestionModel questionModel){

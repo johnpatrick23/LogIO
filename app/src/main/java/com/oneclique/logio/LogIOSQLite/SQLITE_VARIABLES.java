@@ -22,6 +22,8 @@ public class SQLITE_VARIABLES {
         public static final String DB_COL_HINT = "a_hint";
         public static final String DB_COL_ADD_TIME = "a_add_time";
         public static final String DB_COL_SLOW_TIME = "a_slow_time";
+        public static final String DB_COL_TOTAL_TIME_SPENT = "a_total_time_spent";
+
     }
 
     public final static class Table_User_Achievements{
@@ -43,6 +45,7 @@ public class SQLITE_VARIABLES {
         public final static String DB_COL_POPUP_MESSAGE_TIME = "a_popup_message_time";
         public final static String DB_COL_STAR = "a_star";
         public static final String DB_COL_AVERAGE_TIME = "a_average_time";
+        public static final String DB_COL_NUMBER_OF_TRIES = "a_number_of_tries";
     }
 
     public final static class Table_Questions{

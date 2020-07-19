@@ -1,5 +1,6 @@
 package com.oneclique.logio;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -36,9 +37,13 @@ public class UserLogsActivity extends AppCompatActivityHelper {
     private TextView mTextViewLogsNumberOfTry;
     private TextView mTextViewLogsBounceRate;
     private TextView mTextViewLogsReturnVisits;
+    private TextView mTextViewLogsTotalTimeSpent;
+
 
     private UserAchievementsModel userAchievementsModel;
+    private List<UserAchievementsModel> userAchievementsModelList;
 
+    @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,12 +53,14 @@ public class UserLogsActivity extends AppCompatActivityHelper {
         usersModel = new UsersModel();
         userLogsModelList = new ArrayList<>();
         userAchievementsModel = new UserAchievementsModel();
+        userAchievementsModelList = new ArrayList<>();
 
         mTextViewLogsDropoutRate = findViewById(R.id.mTextViewLogsDropoutRate);
         mTextViewLogsMessageDisplayTime = findViewById(R.id.mTextViewLogsMessageDisplayTime);
         mTextViewLogsNumberOfTry = findViewById(R.id.mTextViewLogsNumberOfTry);
         mTextViewLogsBounceRate = findViewById(R.id.mTextViewLogsBounceRate);
         mTextViewLogsReturnVisits = findViewById(R.id.mTextViewLogsReturnVisits);
+        mTextViewLogsTotalTimeSpent = findViewById(R.id.mTextViewLogsTotalTimeSpent);
 
         logIOSQLite = new LogIOSQLite(UserLogsActivity.this);
         logIOSQLite.createDatabase();
@@ -84,6 +91,7 @@ public class UserLogsActivity extends AppCompatActivityHelper {
                         usersModel.setA_hint(cursor.getString(cursor.getColumnIndex(Table_Users.DB_COL_HINT)));
                         usersModel.setA_add_time(cursor.getString(cursor.getColumnIndex(Table_Users.DB_COL_ADD_TIME)));
                         usersModel.setA_slow_time(cursor.getString(cursor.getColumnIndex(Table_Users.DB_COL_SLOW_TIME)));
+                        usersModel.setA_total_time_spent(cursor.getString(cursor.getColumnIndex(Table_Users.DB_COL_TOTAL_TIME_SPENT)));
                     }
                 }
             }
@@ -109,6 +117,7 @@ public class UserLogsActivity extends AppCompatActivityHelper {
                     userLogsModel.setA_popup_message_time(cursor.getString(cursor.getColumnIndex(Table_User_Logs.DB_COL_POPUP_MESSAGE_TIME)));
                     userLogsModel.setA_star(cursor.getString(cursor.getColumnIndex(Table_User_Logs.DB_COL_STAR)));
                     userLogsModel.setA_average_time(cursor.getString(cursor.getColumnIndex(Table_User_Logs.DB_COL_AVERAGE_TIME)));
+                    userLogsModel.setA_number_of_tries(cursor.getString(cursor.getColumnIndex(Table_User_Logs.DB_COL_NUMBER_OF_TRIES)));
 
                     UserLogsModelLog(userLogsModel);
 
@@ -125,7 +134,6 @@ public class UserLogsActivity extends AppCompatActivityHelper {
                             "WHERE " + Table_User_Achievements.DB_COL_USERNAME + " = '" + playerInGameModel.getUsername() + "';");
 
             Log.i(TAG, "logIOSQLite.executeReader: " + cursor.getCount());
-
             if(cursor.getCount() != 0){
                 Log.i(TAG, "UserLogsModelLog(userLogsModel):");
                 while (cursor.moveToNext()){
@@ -137,7 +145,7 @@ public class UserLogsActivity extends AppCompatActivityHelper {
                     userAchievementsModel.setA_description(cursor.getString(cursor.getColumnIndex(Table_User_Achievements.DB_COL_DESCRIPTION)));
                     userAchievementsModel.setA_number_of_tries(cursor.getString(cursor.getColumnIndex(Table_User_Achievements.DB_COL_NUMBER_OF_TRIES)));
                     userAchievementsModel.setA_username(cursor.getString(cursor.getColumnIndex(Table_User_Achievements.DB_COL_USERNAME)));
-
+                    userAchievementsModelList.add(userAchievementsModel);
                     UserAchievementsModelLog(userAchievementsModel);
                 }
             }
@@ -148,31 +156,36 @@ public class UserLogsActivity extends AppCompatActivityHelper {
 
         try {
             int messageDisplayTime = 0;
-
+            int number_Of_Tries = 0;
+            for(UserAchievementsModel userAchievementsModel1 : userAchievementsModelList){
+                number_Of_Tries += Integer.parseInt(userAchievementsModel1.getA_number_of_tries());
+            }
             for (UserLogsModel userLogsModel: userLogsModelList) {
                 messageDisplayTime += Integer.parseInt(userLogsModel.getA_popup_message_time());
             }
-            float numberOfTries = (Integer.parseInt(userAchievementsModel.getA_number_of_tries()) * 100);
-            float numberOfAccess = (Integer.parseInt(usersModel.getA_number_of_access()) * 100);
-            float dropOutRate =  numberOfTries / numberOfAccess;
 
-            Log.i(TAG, "numberOfTries: " + numberOfTries);
-            Log.i(TAG, "numberOfAccess: " + numberOfAccess);
-            Log.i(TAG, "dropOutRate: " + dropOutRate);
-            Log.i(TAG, "(numberOfAccess == numberOfTries ? 0 : 100): " + (numberOfAccess == numberOfTries ? 0 : 100));
-            dropOutRate *= (numberOfAccess == numberOfTries ? 0 : 100);
-
-            Log.i(TAG, "dropOutRate: " + dropOutRate);
-
-            String dropOutRateString = String.format("%.02f", dropOutRate) + "%";
+            float numberOfAccess = (float)Integer.parseInt(usersModel.getA_number_of_access());
             float messageDisplayTimeF = (float)messageDisplayTime/60;
-            Log.i(TAG, "messageDisplayTime: " + messageDisplayTimeF);
-            String messageDisplayTimeString = String.format("%.02f", messageDisplayTimeF);
-            mTextViewLogsDropoutRate.setText(dropOutRateString);
-            mTextViewLogsMessageDisplayTime.setText(messageDisplayTimeString);
-            mTextViewLogsNumberOfTry.setText(userAchievementsModel.getA_number_of_tries());
-            mTextViewLogsBounceRate.setText(usersModel.getA_number_of_access());
-            mTextViewLogsReturnVisits.setText(usersModel.getA_number_of_access());
+            float totalTimeSpentF = (float)Integer.parseInt(usersModel.getA_total_time_spent())/60;
+            float returnVisits = totalTimeSpentF / (float)number_Of_Tries;
+            float dropOutRate =  (float)number_Of_Tries / returnVisits;
+            float bounceRate = numberOfAccess / returnVisits;
+
+            Log.i(TAG, "numberOfAccess: " + numberOfAccess);
+            Log.i(TAG, "number_Of_Tries: " + number_Of_Tries);
+            Log.i(TAG, "messageDisplayTimeF: " + messageDisplayTimeF);
+            Log.i(TAG, "totalTimeSpentF: " + totalTimeSpentF);
+            Log.i(TAG, "returnVisits: " + returnVisits);
+            Log.i(TAG, "dropOutRate: " + dropOutRate);
+            Log.i(TAG, "bounceRate: " + bounceRate);
+
+            mTextViewLogsDropoutRate.setText((String.format("%.02f", dropOutRate) + "%"));
+            mTextViewLogsMessageDisplayTime.setText(String.format("%.02f", messageDisplayTimeF));
+            mTextViewLogsTotalTimeSpent.setText(String.format("%.02f", totalTimeSpentF));
+            mTextViewLogsNumberOfTry.setText(String.valueOf(number_Of_Tries));
+            mTextViewLogsBounceRate.setText((String.format("%.02f", bounceRate) + "%"));
+            mTextViewLogsReturnVisits.setText(String.format("%.02f", returnVisits));
+
         }catch (Exception e){
             Log.i(TAG, "e: " + e);
             Toast.makeText(UserLogsActivity.this, "Nothing to display!", Toast.LENGTH_LONG).show();

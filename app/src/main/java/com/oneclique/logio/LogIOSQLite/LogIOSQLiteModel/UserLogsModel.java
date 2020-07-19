@@ -10,6 +10,7 @@ public class UserLogsModel implements Serializable {
     private String a_popup_message_time;
     private String a_star;
     private String a_average_time;
+    private String a_number_of_tries;
 
     public String getA_username() {
         return a_username;
@@ -59,4 +60,11 @@ public class UserLogsModel implements Serializable {
         this.a_popup_message_time = a_popup_message_time;
     }
 
+    public String getA_number_of_tries() {
+        return a_number_of_tries;
+    }
+
+    public void setA_number_of_tries(String a_number_of_tries) {
+        this.a_number_of_tries = a_number_of_tries;
+    }
 }

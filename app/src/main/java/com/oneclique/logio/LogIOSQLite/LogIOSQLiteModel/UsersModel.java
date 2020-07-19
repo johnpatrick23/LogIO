@@ -18,6 +18,7 @@ public class UsersModel implements Serializable {
     private String a_hint;
     private String a_add_time;
     private String a_slow_time;
+    private String a_total_time_spent;
 
     public String getA_add_time() {
         return a_add_time;
@@ -129,5 +130,13 @@ public class UsersModel implements Serializable {
 
     public void setA_level_7_stars(String a_level_7_stars) {
         this.a_level_7_stars = a_level_7_stars;
+    }
+
+    public String getA_total_time_spent() {
+        return a_total_time_spent;
+    }
+
+    public void setA_total_time_spent(String a_total_time_spent) {
+        this.a_total_time_spent = a_total_time_spent;
     }
 }
